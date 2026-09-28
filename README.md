@@ -349,23 +349,3 @@ Serve `frontend/` files via Nginx or Cloudflare Pages.
 3. **Offline PWA Support**: Add Progressive Web App service workers for offline caching.
 
 
-
-## API Limit Exceed Error Solution
-That's a great question!
-
-Here is what you need to know about this error and how the application will handle it going forward:
-
-Will the error happen again?
-The "Quota Exceeded" error itself will technically still happen in the background whenever you hit the limit of your free-tier Gemini API key. Google limits how many requests you can make per minute/day on the free plan.
-
-Do you need to worry about it?
-No, you don't! Thanks to the fallback system we just implemented, this error will never break your app again.
-
-From now on, if you hit the Gemini API quota limit, the application will silently handle the error. You will just see a small yellow warning that says "Audio API failed. Falling back to text parser..." and your transaction will still be saved successfully using the built-in offline parser. Your workflow will not be interrupted.
-
-How to permanently stop the background error:
-If you want to stop hitting the quota limits entirely and rely 100% on the Gemini AI without seeing the fallback warning, you have two options:
-
-Upgrade your Gemini Plan: Go to Google AI Studio and set up billing to remove the free-tier limits.
-Use a New Key: You can generate a fresh API key from a different Google account and replace the GEMINI_API_KEY in your backend/.env file.
-For now, you are completely fine to just keep using the app as is! The fallback system has your back.
