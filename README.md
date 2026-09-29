@@ -231,59 +231,6 @@ Open `http://localhost:3000/` in Google Chrome or Microsoft Edge.
 
 ---
 
-## 📑 Sample API Endpoints & Request/Response Formats
-
-### 1. Register User
-`POST /api/auth/register/`
-**Request Payload**:
-```json
-{
-  "username": "shopkeeper1",
-  "email": "shop@example.com",
-  "password": "Password123",
-  "confirm_password": "Password123",
-  "business_name": "Metro General Store",
-  "phone": "+91 9876543210"
-}
-```
-
-### 2. Parse Voice Transcript
-`POST /api/voice/parse/`
-**Request Payload**:
-```json
-{
-  "transcript": "Alex borrowed 2500 rupees and will pay in 5 days"
-}
-```
-**Response Payload**:
-```json
-{
-  "customer_name": "Alex",
-  "amount": 2500.0,
-  "transaction_type": "credit",
-  "due_date": "2026-08-12",
-  "notes": "Alex borrowed 2500 rupees and will pay in 5 days",
-  "date": "2026-08-07",
-  "status": "pending",
-  "parser_used": "gemini-ai"
-}
-```
-
-### 3. Create Transaction
-`POST /api/transactions/`
-**Request Payload**:
-```json
-{
-  "customer_name": "Alex",
-  "amount": 2500.0,
-  "transaction_type": "credit",
-  "due_date": "2026-08-12",
-  "description": "Alex borrowed 2500 rupees",
-  "status": "pending"
-}
-```
-
----
 
 ## ▶️ How to Run the Project (Daily Usage)
 
