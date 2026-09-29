@@ -221,15 +221,7 @@ Open `http://localhost:3000/` in Google Chrome or Microsoft Edge.
 4. **Header Interceptor**: AngularJS `jwtInterceptor` in `js/app.js` attaches `Authorization: Bearer <access_token>` to every subsequent `/api/` HTTP request.
 5. **Route Guard**: AngularJS listens to `$routeChangeStart` events to block unauthenticated users from reaching protected routes (`/dashboard`, `/voice`, `/customers`, etc.).
 
----
 
-## 📡 Ports & Frontend-Backend Communication
-
-- **Backend API Port**: `http://127.0.0.1:8000/api/`
-- **Frontend Port**: `http://127.0.0.1:8000/` (Unified) or `http://localhost:3000/` (Independent)
-- Communication happens via standard CORS-enabled REST APIs JSON payloads.
-
----
 
 
 ## ▶️ How to Run the Project (Daily Usage)
