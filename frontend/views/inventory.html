@@ -1,230 +1,282 @@
-<div>
-  <!-- Header -->
+<!-- =====================================================
+     INVENTORY PAGE — Product Management
+     ===================================================== -->
+<div class="animate-fade-up">
+
+  <!-- ── HEADER ───────────────────────────────────────────────────────── -->
   <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
-    <div>
-      <h2 class="fw-bold mb-1"><i class="fa-solid fa-boxes-stacked text-primary me-2"></i>Inventory</h2>
-      <p class="text-muted small mb-0">Manage your products and default selling prices. These prices are auto-used when no price is spoken during voice transactions.</p>
+    <div class="page-header">
+      <h2><i class="fa-solid fa-boxes-stacked text-purple me-2"></i>Inventory Management</h2>
+      <p>Manage product stock &amp; default prices — auto-applied when prices are omitted in voice entries</p>
     </div>
-    <div class="d-flex gap-2">
-      <button class="btn btn-gradient-blue shadow-sm" data-bs-toggle="modal" data-bs-target="#inventoryFormModal" ng-click="openAddModal()">
-        <i class="fa-solid fa-plus me-2"></i> Add Inventory
+    <div class="d-flex gap-2 flex-wrap">
+      <button class="btn btn-gradient-purple d-inline-flex align-items-center gap-2 px-4 py-2 flex-shrink-0"
+              id="add-inventory-btn"
+              data-bs-toggle="modal" data-bs-target="#inventoryFormModal"
+              ng-click="openAddModal()">
+        <i class="fa-solid fa-plus"></i> Add Product
       </button>
-      <button class="btn btn-outline-blue shadow-sm" ng-click="openVoiceAdd()">
-        <i class="fa-solid fa-microphone me-2"></i> Add by Voice
+      <button class="btn btn-outline-purple d-inline-flex align-items-center gap-2 px-3 py-2 flex-shrink-0"
+              id="voice-add-inventory-btn"
+              ng-click="openVoiceAdd()">
+        <i class="fa-solid fa-microphone"></i> Add by Voice
       </button>
     </div>
   </div>
 
-  <!-- Search Bar -->
+  <!-- ── SEARCH + COUNTER ────────────────────────────────────────────── -->
   <div class="card-custom p-3 mb-4">
-    <div class="row g-3">
+    <div class="row g-3 align-items-center">
       <div class="col-md-6 col-lg-4">
         <div class="input-group">
-          <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
-          <input type="text" class="form-control" placeholder="Search products by name..."
+          <span class="input-group-text"><i class="fa-solid fa-magnifying-glass text-purple"></i></span>
+          <input type="text" class="form-control"
+                 id="inventory-search"
+                 placeholder="Search products by name..."
                  ng-model="searchQuery" ng-change="onSearchChange()">
         </div>
       </div>
-      <div class="col-md-6 col-lg-8 d-flex align-items-center justify-content-end">
-        <span class="text-muted small" ng-if="inventoryItems.length > 0">
-          <i class="fa-solid fa-cube me-1"></i> {{ inventoryItems.length }} product(s) in inventory
+      <div class="col-md-6 col-lg-8 d-flex justify-content-end" ng-if="inventoryItems.length > 0">
+        <span class="badge-custom badge-sales">
+          <i class="fa-solid fa-cube me-1"></i> {{ inventoryItems.length }} product(s) in stock
         </span>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════════════════
-       VOICE ADD SECTION
-       ═══════════════════════════════════════════════════════════════════ -->
-  <div ng-if="isVoiceMode" class="card-custom p-4 p-md-5 mb-4">
+  <!-- ══ VOICE ADD PANEL ════════════════════════════════════════════════ -->
+  <div ng-if="isVoiceMode" class="card-custom p-4 p-md-5 mb-4"
+       style="border-color:var(--soft-purple); background:var(--very-light-lavender);">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h5 class="fw-bold mb-0 text-primary">
-        <i class="fa-solid fa-microphone me-2"></i> Add Inventory by Voice
-      </h5>
-      <button class="btn btn-sm btn-light border" ng-click="closeVoiceAdd()">
+      <div>
+        <h5 class="fw-bold mb-1 text-purple">
+          <i class="fa-solid fa-microphone me-2"></i>Add Inventory by Voice
+        </h5>
+        <p class="text-muted mb-0" style="font-size:.85rem;">
+          Speak: <strong class="text-dark">"Sugar 2 kg for ₹100"</strong> or
+          <strong class="text-dark">"Add wheat at ₹100 per kg"</strong>
+        </p>
+      </div>
+      <button class="btn btn-lavender btn-sm px-3" ng-click="closeVoiceAdd()">
         <i class="fa-solid fa-xmark me-1"></i> Close
       </button>
     </div>
-    <p class="text-muted small mb-3">
-      Speak a phrase like: <em>"Sugar 2 kg for ₹100"</em> or <em>"Add wheat for ₹100 per kg"</em>
-    </p>
 
     <!-- Mic Button -->
     <div class="text-center mb-3">
-      <button type="button" class="mic-btn" ng-class="{'recording': isRecording}" ng-click="toggleVoiceRecording()" title="Click to start/stop recording"
-              style="width: 60px; height: 60px; font-size: 1.3rem;">
+      <button type="button" class="mic-btn"
+              ng-class="{'recording': isRecording}"
+              ng-click="toggleVoiceRecording()"
+              style="width:72px; height:72px; font-size:1.65rem;">
         <i class="fa-solid" ng-class="isRecording ? 'fa-square' : 'fa-microphone'"></i>
       </button>
-      <div class="mt-2 small fw-semibold" ng-class="isRecording ? 'text-danger' : 'text-muted'">
-        <span ng-if="isRecording"><i class="fa-solid fa-circle text-danger me-1 animate-pulse"></i> Listening...</span>
-        <span ng-if="!isRecording">Tap to start recording</span>
+      <div class="mt-2 fw-semibold" style="font-size:.83rem;"
+           ng-class="isRecording ? 'text-rose' : 'text-muted'">
+        <span ng-if="isRecording">
+          <span class="dot-pulse me-1"></span> Listening...
+        </span>
+        <span ng-if="!isRecording">Tap to start</span>
       </div>
     </div>
 
     <!-- Transcript -->
-    <textarea class="form-control mb-3" rows="2" ng-model="voiceTranscript" ng-disabled="isRecording"
-              placeholder="Your speech will appear here..."></textarea>
+    <textarea class="form-control transcript-box mb-3" rows="2"
+              ng-model="voiceTranscript" ng-disabled="isRecording"
+              placeholder="Your speech transcript will appear here..."></textarea>
 
     <div class="d-flex justify-content-end gap-2" ng-if="!showVoiceConfirm">
-      <button type="button" class="btn btn-gradient-blue px-4" ng-click="parseVoiceInventory()" ng-disabled="!voiceTranscript">
-        <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Extract Details
+      <button type="button" class="btn btn-gradient-purple px-4"
+              ng-click="parseVoiceInventory()" ng-disabled="!voiceTranscript">
+        <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Extract Product Details
       </button>
     </div>
 
     <!-- Voice Confirmation -->
-    <div ng-if="showVoiceConfirm && voiceParsed" class="border-top pt-3 mt-3">
-      <h6 class="fw-bold text-success mb-3"><i class="fa-solid fa-circle-check me-2"></i> Extracted Inventory Details</h6>
-      <div class="bg-light p-3 rounded mb-3">
+    <div ng-if="showVoiceConfirm && voiceParsed" class="mt-3 pt-3"
+         style="border-top:1px solid var(--border-color);">
+      <div class="fw-bold text-emerald mb-3" style="font-size:.9rem;">
+        <i class="fa-solid fa-circle-check me-2"></i>Extracted Inventory Details — Please Review
+      </div>
+      <div class="card-custom p-3 mb-3">
         <div class="row g-3">
           <div class="col-md-3">
-            <label class="form-label fw-semibold small">Product Name</label>
+            <label class="form-label">Product Name</label>
             <input type="text" class="form-control" ng-model="voiceParsed.product_name">
           </div>
           <div class="col-md-3">
-            <label class="form-label fw-semibold small">Unit</label>
+            <label class="form-label">Unit</label>
             <select class="form-select" ng-model="voiceParsed.unit">
               <option ng-repeat="u in unitOptions" value="{{u.value}}">{{u.label}}</option>
             </select>
           </div>
           <div class="col-md-3">
-            <label class="form-label fw-semibold small">Quantity</label>
+            <label class="form-label">Quantity</label>
             <input type="number" step="0.001" min="0.001" class="form-control" ng-model="voiceParsed.quantity">
           </div>
           <div class="col-md-3">
-            <label class="form-label fw-semibold small">Price (₹)</label>
-            <input type="number" step="0.01" min="0" class="form-control" ng-model="voiceParsed.price">
+            <label class="form-label">Price (₹)</label>
+            <div class="input-group">
+              <span class="input-group-text fw-bold">₹</span>
+              <input type="number" step="0.01" min="0" class="form-control" ng-model="voiceParsed.price">
+            </div>
           </div>
         </div>
       </div>
       <div class="d-flex justify-content-end gap-2">
-        <button type="button" class="btn btn-light border" ng-click="showVoiceConfirm = false; voiceParsed = null;">Cancel</button>
-        <button type="button" class="btn btn-success px-4" ng-click="confirmVoiceAdd()" ng-disabled="isSaving">
+        <button type="button" class="btn btn-lavender px-3"
+                ng-click="showVoiceConfirm = false; voiceParsed = null;">Cancel</button>
+        <button type="button" class="btn btn-gradient-purple px-4"
+                ng-click="confirmVoiceAdd()" ng-disabled="isSaving">
           <span ng-if="isSaving" class="spinner-border spinner-border-sm me-2"></span>
-          <i class="fa-solid fa-check me-2" ng-if="!isSaving"></i> Confirm & Save
+          <i class="fa-solid fa-check me-1" ng-if="!isSaving"></i>
+          Confirm &amp; Save Item
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════════════════
-       INVENTORY TABLE
-       ═══════════════════════════════════════════════════════════════════ -->
-  <div class="card-custom p-4">
-    <!-- Loading State -->
+  <!-- ══ INVENTORY TABLE ════════════════════════════════════════════════ -->
+  <div class="table-custom-container">
+
+    <!-- Loading -->
     <div ng-if="isLoading" class="text-center py-5">
-      <div class="spinner-border text-primary" role="status"></div>
-      <p class="text-muted mt-2">Loading inventory...</p>
+      <div class="spinner-border" role="status"></div>
+      <p class="text-muted mt-2 small">Loading inventory items...</p>
     </div>
 
-    <!-- Inventory Table -->
-    <div ng-if="!isLoading && inventoryItems.length > 0">
-      <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-          <thead class="table-light">
-            <tr>
-              <th style="width: 5%">#</th>
-              <th style="width: 30%">Product</th>
-              <th style="width: 15%">Unit</th>
-              <th style="width: 15%">Quantity</th>
-              <th style="width: 15%">Default Price</th>
-              <th style="width: 20%" class="text-end">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="item in inventoryItems track by item.id">
-              <td class="text-muted small">{{ $index + 1 }}</td>
-              <td>
-                <div class="fw-semibold text-dark">{{ item.product_name }}</div>
-              </td>
-              <td>
-                <span class="badge bg-light text-dark border">{{ item.unit }}</span>
-              </td>
-              <td>
-                <span class="fw-semibold text-dark">{{ item.quantity | number:3 }}</span>
-              </td>
-              <td>
-                <span class="fw-bold text-success">₹{{ item.price | number:2 }}</span>
-                <span class="text-muted small">/{{ item.unit }}</span>
-              </td>
-              <td class="text-end">
-                <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#inventoryFormModal" ng-click="openEditModal(item)" title="Edit">
-                  <i class="fa-solid fa-pen-to-square me-1"></i> Edit
+    <!-- Data Table -->
+    <div ng-if="!isLoading && inventoryItems.length > 0" class="table-responsive">
+      <table class="table table-custom align-middle">
+        <thead>
+          <tr>
+            <th style="width:5%">#</th>
+            <th style="width:35%">Product Name</th>
+            <th style="width:15%">Unit</th>
+            <th style="width:18%">Quantity</th>
+            <th style="width:18%">Default Price</th>
+            <th style="width:9%" class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in inventoryItems track by item.id">
+            <td class="text-muted fw-semibold" style="font-size:.8rem;">{{ $index + 1 }}</td>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div style="width:36px; height:36px; border-radius:var(--radius-md); background:var(--light-lavender); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <i class="fa-solid fa-box text-purple" style="font-size:.85rem;"></i>
+                </div>
+                <span class="fw-bold text-dark">{{ item.product_name }}</span>
+              </div>
+            </td>
+            <td>
+              <span class="badge-custom badge-sales">{{ item.unit }}</span>
+            </td>
+            <td class="fw-semibold text-dark">{{ item.quantity | number:3 }}</td>
+            <td>
+              <span class="fw-bold text-emerald" style="font-size:1rem;">₹{{ item.price | number:2 }}</span>
+              <span class="text-muted small"> / {{ item.unit }}</span>
+            </td>
+            <td class="text-end">
+              <div class="d-inline-flex gap-1">
+                <button class="btn-action-round"
+                        data-bs-toggle="modal" data-bs-target="#inventoryFormModal"
+                        ng-click="openEditModal(item)" title="Edit">
+                  <i class="fa-solid fa-pen text-purple"></i>
                 </button>
-                <button class="btn btn-sm btn-outline-danger" ng-click="deleteItem(item)" title="Delete">
-                  <i class="fa-solid fa-trash me-1"></i> Delete
+                <button class="btn-action-round danger"
+                        ng-click="deleteItem(item)" title="Delete">
+                  <i class="fa-solid fa-trash text-danger"></i>
                 </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- Empty State -->
-    <div ng-if="!isLoading && inventoryItems.length === 0" class="text-center py-5">
-      <i class="fa-solid fa-box-open text-muted" style="font-size: 3rem;"></i>
-      <h5 class="fw-bold mt-3">No inventory items yet</h5>
-      <p class="text-muted">Add your commonly sold products and their prices<br>to automatically use them during voice transactions.</p>
-      <div class="d-flex justify-content-center gap-2 mt-3">
-        <button class="btn btn-gradient-blue" data-bs-toggle="modal" data-bs-target="#inventoryFormModal" ng-click="openAddModal()">
-          <i class="fa-solid fa-plus me-2"></i> Add Inventory
-        </button>
-        <button class="btn btn-outline-blue" ng-click="openVoiceAdd()">
-          <i class="fa-solid fa-microphone me-2"></i> Add by Voice
-        </button>
+    <div ng-if="!isLoading && inventoryItems.length === 0">
+      <div class="empty-state py-5">
+        <div class="empty-state-icon">
+          <i class="fa-solid fa-box-open"></i>
+        </div>
+        <h5>No Products Found</h5>
+        <p>Add commonly sold products &amp; default prices.<br>They'll auto-apply in voice transactions.</p>
+        <div class="d-flex justify-content-center gap-2 mt-3">
+          <button class="btn btn-gradient-purple px-4"
+                  data-bs-toggle="modal" data-bs-target="#inventoryFormModal"
+                  ng-click="openAddModal()">
+            <i class="fa-solid fa-plus me-1"></i> Add Product
+          </button>
+          <button class="btn btn-outline-purple px-4" ng-click="openVoiceAdd()">
+            <i class="fa-solid fa-microphone me-1"></i> Add by Voice
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════════════════
-       ADD / EDIT MODAL
-       ═══════════════════════════════════════════════════════════════════ -->
+  <!-- ══ ADD/EDIT INVENTORY MODAL ════════════════════════════════════════ -->
   <div class="modal fade" id="inventoryFormModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content border-0 shadow">
-        <div class="modal-header border-0 pb-0">
-          <h5 class="modal-header-title fw-bold">{{ editMode ? 'Edit Inventory Item' : 'Add Inventory Item' }}</h5>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-header-title fw-bold text-dark mb-0">
+            <i class="fa-solid fa-box text-purple me-2"></i>
+            {{ editMode ? 'Edit Inventory Item' : 'Add Inventory Item' }}
+          </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <form ng-submit="saveItem()">
             <div class="mb-3">
-              <label class="form-label fw-semibold small">Product Name *</label>
-              <input type="text" class="form-control" ng-model="formItem.product_name" required
-                     placeholder="e.g. Sugar, Rice, Oil">
+              <label class="form-label">Product Name *</label>
+              <input type="text" class="form-control"
+                     ng-model="formItem.product_name" required
+                     placeholder="e.g. Butter, Sugar, Rice, Oil">
             </div>
             <div class="row g-3 mb-3">
               <div class="col-md-4">
-                <label class="form-label fw-semibold small">Unit *</label>
+                <label class="form-label">Unit *</label>
                 <select class="form-select" ng-model="formItem.unit" required>
                   <option ng-repeat="u in unitOptions" value="{{u.value}}">{{u.label}}</option>
                 </select>
               </div>
               <div class="col-md-4">
-                <label class="form-label fw-semibold small">Quantity *</label>
-                <input type="number" step="0.001" min="0.001" class="form-control" ng-model="formItem.quantity" required
-                       placeholder="e.g. 1.0">
+                <label class="form-label">Quantity *</label>
+                <input type="number" step="0.001" min="0.001" class="form-control"
+                       ng-model="formItem.quantity" required placeholder="e.g. 1.0">
               </div>
               <div class="col-md-4">
-                <label class="form-label fw-semibold small">Default Price (₹) *</label>
-                <input type="number" step="0.01" min="0" class="form-control" ng-model="formItem.price" required
-                       placeholder="e.g. 45.00">
+                <label class="form-label">Price (₹) *</label>
+                <div class="input-group">
+                  <span class="input-group-text fw-bold">₹</span>
+                  <input type="number" step="0.01" min="0" class="form-control"
+                         ng-model="formItem.price" required placeholder="0.00">
+                </div>
               </div>
             </div>
 
             <!-- Preview -->
-            <div class="bg-light rounded p-3 mb-3" ng-if="formItem.product_name && formItem.price >= 0">
-              <span class="fw-semibold text-dark">{{ formItem.product_name }}</span>
-              <span class="text-muted mx-1">→</span>
-              <span class="fw-semibold text-secondary">{{ formItem.quantity | number:3 }} {{ formItem.unit }}</span>
-              <span class="text-muted mx-1">at</span>
-              <span class="fw-bold text-success">₹{{ formItem.price | number:2 }}</span>
+            <div class="p-3 rounded-3 mb-4"
+                 style="background:var(--very-light-lavender); border:1px solid var(--border-color);"
+                 ng-if="formItem.product_name && formItem.price >= 0">
+              <div class="d-flex align-items-center gap-2 flex-wrap" style="font-size:.88rem;">
+                <i class="fa-solid fa-eye text-purple"></i>
+                <strong class="text-dark">{{ formItem.product_name }}</strong>
+                <span class="text-muted">→</span>
+                <span class="fw-semibold text-purple-dark">{{ formItem.quantity | number:3 }} {{ formItem.unit }}</span>
+                <span class="text-muted">at</span>
+                <span class="fw-bold text-emerald">₹{{ formItem.price | number:2 }}</span>
+                <span class="text-muted">/ {{ formItem.unit }}</span>
+              </div>
             </div>
 
-            <div class="d-flex justify-content-end gap-2 pt-2">
-              <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-gradient-blue" ng-disabled="isSaving">
+            <div class="d-flex justify-content-end gap-2">
+              <button type="button" class="btn btn-lavender px-3" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-gradient-purple px-4" ng-disabled="isSaving">
                 <span ng-if="isSaving" class="spinner-border spinner-border-sm me-2"></span>
+                <i class="fa-solid fa-check me-1" ng-if="!isSaving"></i>
                 {{ editMode ? 'Update Item' : 'Save Item' }}
               </button>
             </div>

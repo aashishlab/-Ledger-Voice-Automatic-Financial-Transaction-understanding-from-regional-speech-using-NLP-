@@ -1,114 +1,185 @@
-<div>
+<!-- =====================================================
+     CUSTOMERS PAGE — Customer Ledger Directory
+     ===================================================== -->
+<div class="animate-fade-up">
+
+  <!-- ── HEADER ───────────────────────────────────────────────────────── -->
   <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
-    <div>
-      <h2 class="fw-bold mb-1">Customer Ledger Directory</h2>
-      <p class="text-muted small mb-0">Manage customer profiles, credit balances, and individual transaction histories</p>
+    <div class="page-header">
+      <h2><i class="fa-solid fa-users text-purple me-2"></i>Customer Ledger Directory</h2>
+      <p>Manage customer accounts, credit balances &amp; individual transaction ledgers</p>
     </div>
-    <button class="btn btn-gradient-blue shadow-sm" data-bs-toggle="modal" data-bs-target="#customerModal" ng-click="openAddModal()">
-      <i class="fa-solid fa-user-plus me-2"></i> Add Customer
+    <button class="btn btn-gradient-purple d-inline-flex align-items-center gap-2 px-4 py-2 flex-shrink-0"
+            id="add-customer-btn"
+            data-bs-toggle="modal" data-bs-target="#customerModal"
+            ng-click="openAddModal()">
+      <i class="fa-solid fa-user-plus"></i> Add Customer
     </button>
   </div>
 
-  <!-- Search & Filter Bar -->
+  <!-- ── SEARCH BAR ─────────────────────────────────────────────────── -->
   <div class="card-custom p-3 mb-4">
-    <div class="row g-3">
+    <div class="row g-3 align-items-center">
       <div class="col-md-6 col-lg-4">
         <div class="input-group">
-          <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
-          <input type="text" class="form-control" placeholder="Search customer by name or phone..." ng-model="searchQuery" ng-change="loadCustomers()">
+          <span class="input-group-text"><i class="fa-solid fa-magnifying-glass text-purple"></i></span>
+          <input type="text" class="form-control"
+                 id="customer-search"
+                 placeholder="Search by name or phone..."
+                 ng-model="searchQuery" ng-change="loadCustomers()">
         </div>
+      </div>
+      <div class="col-md-6 col-lg-8 d-flex align-items-center" ng-if="customers.length > 0">
+        <span class="badge-custom badge-sales ms-auto">
+          <i class="fa-solid fa-users me-1"></i> {{ customers.length }} customer(s)
+        </span>
       </div>
     </div>
   </div>
 
-  <!-- Customers Cards Grid -->
+  <!-- ── CUSTOMER CARDS GRID ─────────────────────────────────────────── -->
   <div class="row g-4 mb-4">
     <div class="col-md-6 col-lg-4" ng-repeat="c in customers">
-      <div class="card-custom p-4 h-100 position-relative">
-        <div class="d-flex justify-content-between align-items-start mb-3">
-          <div class="d-flex align-items-center gap-3">
-            <div class="metric-icon metric-icon-blue" style="width:48px; height:48px; font-size:1.3rem;">
-              <i class="fa-solid fa-user"></i>
+      <div class="customer-card d-flex flex-column justify-content-between h-100">
+        <!-- Card Top -->
+        <div>
+          <!-- Name + Actions -->
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex align-items-center gap-3">
+              <div class="customer-avatar">{{ c.name.charAt(0) | uppercase }}</div>
+              <div>
+                <h5 class="fw-bold mb-0 text-dark" style="font-size:1rem;">{{ c.name }}</h5>
+                <small class="text-muted">
+                  <i class="fa-solid fa-phone me-1 text-purple" style="font-size:.7rem;"></i>
+                  {{ c.phone || 'No phone' }}
+                </small>
+              </div>
             </div>
-            <div>
-              <h5 class="fw-bold mb-0 text-dark">{{ c.name }}</h5>
-              <small class="text-muted">{{ c.phone || 'No phone' }}</small>
+
+            <div class="dropdown">
+              <button class="btn-action-round" type="button" data-bs-toggle="dropdown"
+                      title="More actions">
+                <i class="fa-solid fa-ellipsis-vertical text-muted"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0)"
+                     data-bs-toggle="modal" data-bs-target="#customerModal"
+                     ng-click="openEditModal(c)">
+                    <i class="fa-solid fa-pen me-2 text-purple"></i> Edit Profile
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="javascript:void(0)"
+                     ng-click="deleteCustomer(c)">
+                    <i class="fa-solid fa-trash me-2"></i> Delete Customer
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
 
-          <div class="dropdown">
-            <button class="btn btn-link text-muted p-1" type="button" data-bs-toggle="dropdown">
-              <i class="fa-solid fa-ellipsis-vertical"></i>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end shadow border-0">
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#customerModal" ng-click="openEditModal(c)"><i class="fa-solid fa-pen me-2 text-muted"></i> Edit Profile</a></li>
-              <li><a class="dropdown-item py-2 text-danger" href="javascript:void(0)" ng-click="deleteCustomer(c)"><i class="fa-solid fa-trash me-2"></i> Delete</a></li>
-            </ul>
+          <!-- Balance Panel -->
+          <div class="customer-balance-panel">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-muted" style="font-size:.78rem; font-weight:600;">Credit Given</span>
+              <span class="fw-bold text-rose">₹{{ c.total_credit | number:2 }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-muted" style="font-size:.78rem; font-weight:600;">Payments Got</span>
+              <span class="fw-bold text-emerald">₹{{ c.total_payments | number:2 }}</span>
+            </div>
+            <div style="height:1px; background:var(--border-color); margin:.5rem 0;"></div>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-bold" style="font-size:.82rem; color:var(--text-dark);">Net Outstanding</span>
+              <span class="fw-extrabold" style="font-size:1.05rem;"
+                    ng-class="c.net_balance > 0 ? 'text-rose' : 'text-emerald'">
+                ₹{{ c.net_balance | number:2 }}
+              </span>
+            </div>
           </div>
         </div>
 
-        <div class="bg-light p-3 rounded mb-3">
-          <div class="d-flex justify-content-between mb-1">
-            <span class="text-muted small">Total Credit Given:</span>
-            <span class="fw-bold text-danger">₹{{ c.total_credit | number:2 }}</span>
-          </div>
-          <div class="d-flex justify-content-between mb-1">
-            <span class="text-muted small">Total Payments Got:</span>
-            <span class="fw-bold text-success">₹{{ c.total_payments | number:2 }}</span>
-          </div>
-          <hr class="my-2">
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="fw-semibold small">Net Outstanding:</span>
-            <span class="fw-extrabold fs-6" ng-class="c.net_balance > 0 ? 'text-danger' : 'text-success'">
-              ₹{{ c.net_balance | number:2 }}
-            </span>
-          </div>
-        </div>
-
-        <button class="btn btn-outline-blue w-100 py-2 btn-sm" data-bs-toggle="modal" data-bs-target="#ledgerModal" ng-click="openCustomerDetails(c)">
-          <i class="fa-solid fa-book-open me-2"></i> View Ledger History
+        <!-- View Ledger Button -->
+        <button class="btn btn-outline-purple w-100 mt-3 d-flex align-items-center justify-content-center gap-2"
+                style="font-size:.87rem; padding:.6rem;"
+                data-bs-toggle="modal" data-bs-target="#ledgerModal"
+                ng-click="openCustomerDetails(c)">
+          <i class="fa-solid fa-book-open"></i> View Ledger History
         </button>
       </div>
     </div>
 
+    <!-- Empty State -->
     <div class="col-12" ng-if="!isLoading && customers.length === 0">
-      <div class="card-custom p-5 text-center">
-        <i class="fa-solid fa-users-slash text-muted fs-1 mb-3"></i>
-        <h5 class="fw-bold">No Customers Found</h5>
-        <p class="text-muted">Click "Add Customer" or use Voice Recording to create customers automatically.</p>
+      <div class="card-custom p-5">
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <i class="fa-solid fa-users-slash"></i>
+          </div>
+          <h5>No Customers Found</h5>
+          <p>Click "Add Customer" or use Voice Recording to add customers automatically.</p>
+          <div class="d-flex justify-content-center gap-2 mt-3">
+            <button class="btn btn-gradient-purple px-4"
+                    data-bs-toggle="modal" data-bs-target="#customerModal"
+                    ng-click="openAddModal()">
+              <i class="fa-solid fa-user-plus me-1"></i> Add Customer
+            </button>
+            <a href="#!/voice" class="btn btn-outline-purple px-4">
+              <i class="fa-solid fa-microphone me-1"></i> Voice Entry
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Customer Form Modal -->
+  <!-- ══ CUSTOMER FORM MODAL ══════════════════════════════════════════ -->
   <div class="modal fade" id="customerModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content border-0 shadow">
-        <div class="modal-header border-0 pb-0">
-          <h5 class="modal-header-title fw-bold">{{ editMode ? 'Edit Customer' : 'Add New Customer' }}</h5>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-header-title fw-bold text-dark mb-0">
+            <i class="fa-solid fa-user me-2 text-purple"></i>
+            {{ editMode ? 'Edit Customer' : 'Add New Customer' }}
+          </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <form ng-submit="saveCustomer()">
             <div class="mb-3">
-              <label class="form-label fw-semibold small">Customer Name *</label>
-              <input type="text" class="form-control" ng-model="newCustomer.name" required placeholder="Full Name">
+              <label class="form-label">Customer Name *</label>
+              <input type="text" class="form-control" ng-model="newCustomer.name"
+                     required placeholder="Full Name" autofocus>
             </div>
             <div class="mb-3">
-              <label class="form-label fw-semibold small">Phone Number</label>
-              <input type="text" class="form-control" ng-model="newCustomer.phone" placeholder="+91 9876543210">
+              <label class="form-label">Phone Number</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-phone text-purple"></i></span>
+                <input type="text" class="form-control" ng-model="newCustomer.phone"
+                       placeholder="+91 9876543210">
+              </div>
             </div>
             <div class="mb-3">
-              <label class="form-label fw-semibold small">Email Address</label>
-              <input type="email" class="form-control" ng-model="newCustomer.email" placeholder="customer@example.com">
+              <label class="form-label">Email Address</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-envelope text-purple"></i></span>
+                <input type="email" class="form-control" ng-model="newCustomer.email"
+                       placeholder="customer@example.com">
+              </div>
             </div>
-            <div class="mb-3">
-              <label class="form-label fw-semibold small">Address / Location</label>
-              <textarea class="form-control" rows="2" ng-model="newCustomer.address"></textarea>
+            <div class="mb-4">
+              <label class="form-label">Address / Location</label>
+              <textarea class="form-control" rows="2" ng-model="newCustomer.address"
+                        placeholder="Shop or home address"></textarea>
             </div>
-            <div class="d-flex justify-content-end gap-2 pt-2">
-              <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-gradient-blue" data-bs-dismiss="modal">Save Customer</button>
+            <div class="d-flex justify-content-end gap-2">
+              <button type="button" class="btn btn-lavender px-3" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-gradient-purple px-4" data-bs-dismiss="modal">
+                <i class="fa-solid fa-check me-1"></i>
+                {{ editMode ? 'Save Changes' : 'Add Customer' }}
+              </button>
             </div>
           </form>
         </div>
@@ -116,21 +187,29 @@
     </div>
   </div>
 
-  <!-- Customer Ledger History Modal -->
+  <!-- ══ CUSTOMER LEDGER MODAL ════════════════════════════════════════ -->
   <div class="modal fade" id="ledgerModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content border-0 shadow">
-        <div class="modal-header bg-light">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
           <div>
-            <h5 class="fw-bold mb-0"><i class="fa-solid fa-book-open text-primary me-2"></i> Ledger: {{ selectedCustomer.name }}</h5>
-            <small class="text-muted">Net Balance: ₹{{ selectedCustomer.net_balance | number:2 }}</small>
+            <h5 class="fw-bold mb-1 text-dark">
+              <i class="fa-solid fa-book-open text-purple me-2"></i>
+              Ledger: {{ selectedCustomer.name }}
+            </h5>
+            <small class="text-muted">
+              Net Outstanding:
+              <strong ng-class="selectedCustomer.net_balance > 0 ? 'text-rose' : 'text-emerald'">
+                ₹{{ selectedCustomer.net_balance | number:2 }}
+              </strong>
+            </small>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body p-0">
           <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-              <thead class="table-light">
+            <table class="table table-custom align-middle mb-0">
+              <thead>
                 <tr>
                   <th>Date</th>
                   <th>Type</th>
@@ -140,21 +219,24 @@
               </thead>
               <tbody>
                 <tr ng-repeat="tx in customerTransactions">
-                  <td class="small text-muted">{{ tx.date }}</td>
+                  <td class="small text-muted" style="white-space:nowrap;">{{ tx.date }}</td>
                   <td>
-                    <span class="badge" ng-class="{
-                      'badge-credit': tx.transaction_type === 'credit',
+                    <span class="badge-custom" ng-class="{
+                      'badge-credit':  tx.transaction_type === 'credit',
                       'badge-payment': tx.transaction_type === 'payment',
-                      'badge-sales': tx.transaction_type === 'sales'
+                      'badge-sales':   tx.transaction_type === 'sales'
                     }">{{ tx.transaction_type | uppercase }}</span>
                   </td>
-                  <td class="small">{{ tx.description || 'N/A' }}</td>
-                  <td class="fw-bold text-end" ng-class="{'text-danger': tx.transaction_type === 'credit', 'text-success': tx.transaction_type === 'payment'}">
+                  <td class="small text-dark" style="max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ tx.description || '—' }}</td>
+                  <td class="fw-bold text-end"
+                      ng-class="{'text-rose': tx.transaction_type === 'credit', 'text-emerald': tx.transaction_type === 'payment'}">
                     ₹{{ tx.amount | number:2 }}
                   </td>
                 </tr>
                 <tr ng-if="!customerTransactions || customerTransactions.length === 0">
-                  <td colspan="4" class="text-center text-muted py-4">No transactions recorded for this customer yet.</td>
+                  <td colspan="4" class="text-center text-muted py-5">
+                    No transactions recorded for this customer yet.
+                  </td>
                 </tr>
               </tbody>
             </table>

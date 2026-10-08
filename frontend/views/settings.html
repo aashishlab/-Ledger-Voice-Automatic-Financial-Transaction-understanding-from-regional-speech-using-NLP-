@@ -1,128 +1,282 @@
-<div>
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-      <h2 class="fw-bold mb-1">Account & Application Settings</h2>
-      <p class="text-muted small mb-0">Manage profile details, security, preferences, and legal information</p>
-    </div>
+<!-- =====================================================
+     SETTINGS PAGE — Account & System Settings
+     ===================================================== -->
+<div class="animate-fade-up">
+
+  <!-- ── HEADER ───────────────────────────────────────────────────────── -->
+  <div class="page-header mb-4">
+    <h2><i class="fa-solid fa-gear text-purple me-2"></i>Account &amp; System Settings</h2>
+    <p>Manage profile details, security preferences, business info &amp; application settings</p>
   </div>
 
   <div class="row g-4">
-    <!-- Sidebar Navigation -->
-    <div class="col-md-3">
-      <div class="card-custom p-2">
-        <div class="nav flex-column nav-pills">
-          <button class="nav-link text-start py-2.5 px-3 fw-semibold mb-1" ng-class="{'active': activeTab === 'profile'}" ng-click="activeTab = 'profile'">
-            <i class="fa-solid fa-user me-2"></i> User Profile
-          </button>
-          <button class="nav-link text-start py-2.5 px-3 fw-semibold mb-1" ng-class="{'active': activeTab === 'security'}" ng-click="activeTab = 'security'">
-            <i class="fa-solid fa-lock me-2"></i> Change Password
-          </button>
-          <button class="nav-link text-start py-2.5 px-3 fw-semibold mb-1" ng-class="{'active': activeTab === 'prefs'}" ng-click="activeTab = 'prefs'">
-            <i class="fa-solid fa-sliders me-2"></i> Preferences
-          </button>
-          <button class="nav-link text-start py-2.5 px-3 fw-semibold mb-1" ng-class="{'active': activeTab === 'info'}" ng-click="activeTab = 'info'">
-            <i class="fa-solid fa-circle-info me-2"></i> About & Legal
-          </button>
+
+    <!-- ── SIDEBAR NAV ──────────────────────────────────────────────── -->
+    <div class="col-md-4 col-lg-3">
+      <div class="card-custom p-3">
+        <div class="d-flex flex-column gap-1">
+          <div class="settings-nav-item" ng-class="{'active': activeTab === 'profile'}"
+               ng-click="activeTab = 'profile'">
+            <i class="fa-solid fa-circle-user text-purple fs-5"></i>
+            <span>User Profile</span>
+          </div>
+          <div class="settings-nav-item" ng-class="{'active': activeTab === 'security'}"
+               ng-click="activeTab = 'security'">
+            <i class="fa-solid fa-shield-halved text-purple fs-5"></i>
+            <span>Security &amp; Password</span>
+          </div>
+          <div class="settings-nav-item" ng-class="{'active': activeTab === 'prefs'}"
+               ng-click="activeTab = 'prefs'">
+            <i class="fa-solid fa-sliders text-purple fs-5"></i>
+            <span>Preferences &amp; UPI</span>
+          </div>
+          <div class="settings-nav-item" ng-class="{'active': activeTab === 'info'}"
+               ng-click="activeTab = 'info'">
+            <i class="fa-solid fa-circle-info text-purple fs-5"></i>
+            <span>About VoiceKhata</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Main Content Area -->
-    <div class="col-md-9">
-      <!-- Profile Tab -->
+    <!-- ── CONTENT PANEL ─────────────────────────────────────────────── -->
+    <div class="col-md-8 col-lg-9">
+
+      <!-- ── PROFILE TAB ──────────────────────────────────────────────── -->
       <div class="card-custom p-4 p-md-5" ng-if="activeTab === 'profile'">
-        <h4 class="fw-bold mb-4"><i class="fa-solid fa-user-gear text-primary me-2"></i> Account Information</h4>
-        <div class="row g-3 mb-3">
-          <div class="col-md-6">
-            <label class="form-label fw-semibold small">Username</label>
-            <input type="text" class="form-control bg-light" ng-model="userProfile.username" readonly>
+        <!-- Profile Header -->
+        <div class="d-flex align-items-center gap-4 mb-5 pb-4"
+             style="border-bottom: 1px solid var(--border-color);">
+          <div class="customer-avatar" style="width:64px; height:64px; font-size:1.7rem; flex-shrink:0;">
+            {{ (userProfile.username || 'U').charAt(0) | uppercase }}
           </div>
-          <div class="col-md-6">
-            <label class="form-label fw-semibold small">Email Address</label>
-            <input type="email" class="form-control bg-light" ng-model="userProfile.email" readonly>
+          <div>
+            <h4 class="fw-bold mb-0 text-dark" style="letter-spacing:-.015em;">
+              {{ userProfile.username || 'User Profile' }}
+            </h4>
+            <div class="text-muted" style="font-size:.875rem;">
+              <i class="fa-solid fa-envelope me-1 text-purple"></i>
+              {{ userProfile.email || 'Registered Account' }}
+            </div>
+            <span class="badge-custom badge-payment mt-1">
+              <i class="fa-solid fa-circle-check"></i> Active Account
+            </span>
           </div>
         </div>
 
+        <h5 class="fw-bold mb-3 text-dark">
+          <i class="fa-solid fa-store text-purple me-2"></i>Business Information
+        </h5>
+
         <div class="row g-3 mb-3">
           <div class="col-md-6">
-            <label class="form-label fw-semibold small">Business / Store Name</label>
-            <input type="text" class="form-control" ng-model="userProfile.profile.business_name">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control"
+                   style="background:var(--very-light-lavender);"
+                   ng-model="userProfile.username" readonly>
           </div>
           <div class="col-md-6">
-            <label class="form-label fw-semibold small">Phone Number</label>
-            <input type="text" class="form-control" ng-model="userProfile.profile.phone">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control"
+                   style="background:var(--very-light-lavender);"
+                   ng-model="userProfile.email" readonly>
           </div>
         </div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <label class="form-label">Business / Store Name</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-store text-purple"></i></span>
+              <input type="text" class="form-control" ng-model="userProfile.profile.business_name"
+                     placeholder="e.g. Ramesh General Store">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Phone Number</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-phone text-purple"></i></span>
+              <input type="text" class="form-control" ng-model="userProfile.profile.phone"
+                     placeholder="+91 9876543210">
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-gradient-purple px-4" ng-click="saveProfile()">
+          <i class="fa-solid fa-save me-2"></i>Save Profile
+        </button>
       </div>
 
-      <!-- Password Change Tab -->
+      <!-- ── SECURITY TAB ──────────────────────────────────────────────── -->
       <div class="card-custom p-4 p-md-5" ng-if="activeTab === 'security'">
-        <h4 class="fw-bold mb-4"><i class="fa-solid fa-shield-halved text-primary me-2"></i> Security & Password</h4>
+        <h4 class="fw-bold mb-4 text-dark">
+          <i class="fa-solid fa-shield-halved text-purple me-2"></i>Security &amp; Password
+        </h4>
         <form ng-submit="updatePassword()">
-          <div class="mb-3 max-w-md">
-            <label class="form-label fw-semibold small">Current Password *</label>
-            <input type="password" class="form-control" ng-model="passwordData.old_password" required placeholder="Enter current password">
+          <div class="mb-3" style="max-width:440px;">
+            <label class="form-label">Current Password *</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-lock text-purple"></i></span>
+              <input type="password" class="form-control"
+                     ng-model="passwordData.old_password" required
+                     placeholder="Enter current password">
+            </div>
           </div>
-
-          <div class="mb-3 max-w-md">
-            <label class="form-label fw-semibold small">New Password *</label>
-            <input type="password" class="form-control" ng-model="passwordData.new_password" required placeholder="Enter new password">
+          <div class="mb-3" style="max-width:440px;">
+            <label class="form-label">New Password *</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-key text-purple"></i></span>
+              <input type="password" class="form-control"
+                     ng-model="passwordData.new_password" required
+                     placeholder="At least 6 characters">
+            </div>
           </div>
-
-          <div class="mb-4 max-w-md">
-            <label class="form-label fw-semibold small">Confirm New Password *</label>
-            <input type="password" class="form-control" ng-model="passwordData.confirm_password" required placeholder="Re-enter new password">
+          <div class="mb-4" style="max-width:440px;">
+            <label class="form-label">Confirm New Password *</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-lock-open text-purple"></i></span>
+              <input type="password" class="form-control"
+                     ng-model="passwordData.confirm_password" required
+                     placeholder="Re-enter new password">
+            </div>
           </div>
-
-          <button type="submit" class="btn btn-gradient-blue px-4">Update Password</button>
+          <button type="submit" class="btn btn-gradient-purple px-4">
+            <i class="fa-solid fa-shield-check me-2"></i>Update Password
+          </button>
         </form>
+
+        <div style="height:1px; background:var(--border-color); margin:2rem 0;"></div>
+
+        <div class="d-flex align-items-start gap-3 p-3 rounded-3"
+             style="background:var(--emerald-bg); border:1px solid rgba(16,185,129,.2);">
+          <i class="fa-solid fa-circle-check text-emerald fs-5 flex-shrink-0 mt-1"></i>
+          <div>
+            <div class="fw-bold text-emerald" style="font-size:.9rem;">JWT Authentication Active</div>
+            <div class="text-muted" style="font-size:.82rem;">
+              Your session is secured with JWT tokens. Passwords are hashed with Django's default PBKDF2 algorithm.
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Preferences Tab -->
+      <!-- ── PREFERENCES TAB ────────────────────────────────────────────── -->
       <div class="card-custom p-4 p-md-5" ng-if="activeTab === 'prefs'">
-        <h4 class="fw-bold mb-4"><i class="fa-solid fa-sliders text-primary me-2"></i> Application Preferences</h4>
+        <h4 class="fw-bold mb-4 text-dark">
+          <i class="fa-solid fa-sliders text-purple me-2"></i>Application Preferences
+        </h4>
         <form ng-submit="saveSettings()">
-          <div class="mb-3">
-            <label class="form-label fw-semibold small">Voice Language Model</label>
-            <input type="text" class="form-control bg-light" value="English (en-US) - Locked" readonly>
-            <small class="text-muted">VoiceKhata is configured for English voice input recognition.</small>
+          <!-- Voice Language -->
+          <div class="mb-4 p-3 rounded-3" style="background:var(--very-light-lavender); border:1px solid var(--border-color);">
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <i class="fa-solid fa-microphone text-purple"></i>
+              <span class="fw-bold text-dark" style="font-size:.9rem;">Voice Language Model</span>
+            </div>
+            <div class="fw-semibold text-purple-dark" style="font-size:.9rem;">
+              English Speech (Web Speech API) — Active
+            </div>
+            <small class="text-muted">
+              VoiceKhata uses browser SpeechRecognition with English spaCy NLP extraction.
+            </small>
           </div>
 
           <div class="mb-3">
-            <label class="form-label fw-semibold small">Currency Symbol</label>
-            <input type="text" class="form-control" ng-model="appSettings.currency">
+            <label class="form-label">Currency Symbol</label>
+            <div class="input-group" style="max-width:200px;">
+              <span class="input-group-text"><i class="fa-solid fa-indian-rupee-sign text-purple"></i></span>
+              <input type="text" class="form-control" ng-model="appSettings.currency"
+                     placeholder="₹">
+            </div>
           </div>
 
           <div class="row g-3 mb-3">
             <div class="col-md-6">
-              <label class="form-label fw-semibold small">UPI ID</label>
-              <input type="text" class="form-control" ng-model="appSettings.upi_id" placeholder="e.g. user@okicici">
+              <label class="form-label">UPI ID</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-qrcode text-purple"></i></span>
+                <input type="text" class="form-control" ng-model="appSettings.upi_id"
+                       placeholder="store@okicici">
+              </div>
             </div>
             <div class="col-md-6">
-              <label class="form-label fw-semibold small">UPI Payment Link (Optional)</label>
-              <input type="text" class="form-control" ng-model="appSettings.upi_link" placeholder="e.g. upi://pay?...">
+              <label class="form-label">UPI Payment Link <span class="text-muted fw-normal">(Optional)</span></label>
+              <input type="text" class="form-control" ng-model="appSettings.upi_link"
+                     placeholder="upi://pay?...">
             </div>
           </div>
 
-          <div class="form-check form-switch mb-3">
-            <input class="form-check-input" type="checkbox" ng-model="appSettings.enable_notifications">
-            <label class="form-check-label fw-medium">Enable Due Date Notifications</label>
+          <div class="mb-4 d-flex align-items-center gap-3 p-3 rounded-3"
+               style="background:var(--very-light-lavender); border:1px solid var(--border-color);">
+            <div class="form-check form-switch mb-0">
+              <input class="form-check-input" type="checkbox" role="switch"
+                     id="enable-notif"
+                     ng-model="appSettings.enable_notifications"
+                     style="width:2.2em; height:1.2em;">
+            </div>
+            <label class="form-check-label fw-semibold text-dark mb-0" for="enable-notif"
+                   style="font-size:.9rem;">
+              <i class="fa-solid fa-bell me-2 text-purple"></i>
+              Enable Due Date Notifications
+            </label>
           </div>
 
-          <button type="submit" class="btn btn-gradient-blue px-4">Save Preferences</button>
+          <button type="submit" class="btn btn-gradient-purple px-4">
+            <i class="fa-solid fa-save me-2"></i>Save Preferences
+          </button>
         </form>
       </div>
 
-      <!-- About & Legal Tab -->
+      <!-- ── ABOUT TAB ─────────────────────────────────────────────────── -->
       <div class="card-custom p-4 p-md-5" ng-if="activeTab === 'info'">
-        <h4 class="fw-bold mb-3"><i class="fa-solid fa-circle-info text-primary me-2"></i> About VoiceKhata</h4>
-        <p class="text-muted">VoiceKhata is a production-level voice-driven ledger and credit management system designed with AngularJS, Django REST Framework, PostgreSQL, and Google Gemini Speech AI Parsing.</p>
-        
-        <hr class="my-4">
-        
-        <h5 class="fw-bold mb-2">Terms of Service & Privacy</h5>
-        <p class="text-muted small">Your financial data is encrypted and protected using standard JWT authentication protocols. All speech processing is parsed securely without storing external voice recordings.</p>
+        <div class="text-center mb-4">
+          <div style="width:80px; height:80px; border-radius:var(--radius-lg); background:linear-gradient(135deg,var(--primary-purple),var(--primary-purple-dark)); display:flex; align-items:center; justify-content:center; font-size:2rem; color:#fff; margin:0 auto 1rem; box-shadow:var(--glow-purple);">
+            <i class="fa-solid fa-microphone-lines"></i>
+          </div>
+          <h4 class="fw-bold text-dark mb-1">VoiceKhata</h4>
+          <p class="text-muted" style="font-size:.875rem;">AI-Powered Voice Accounting &amp; Financial Ledger</p>
+        </div>
+
+        <p class="text-muted" style="font-size:.9rem; line-height:1.75;">
+          VoiceKhata is an intelligent voice-first bookkeeping application built with
+          <strong class="text-dark">AngularJS</strong>,
+          <strong class="text-dark">Django REST Framework</strong>,
+          <strong class="text-dark">PostgreSQL</strong>, and
+          <strong class="text-dark">spaCy NLP</strong>.
+          Speak naturally in English to record credit, payments, sales and expenses instantly.
+        </p>
+
+        <div style="height:1px; background:var(--border-color); margin:1.5rem 0;"></div>
+
+        <!-- Tech Stack -->
+        <h5 class="fw-bold mb-3 text-dark" style="font-size:1rem;">Technology Stack</h5>
+        <div class="row g-2 mb-4">
+          <div class="col-6 col-md-4" ng-repeat="tech in [
+            {icon:'fa-microphone', label:'Web Speech API', color:'text-purple'},
+            {icon:'fa-brain', label:'spaCy NLP', color:'text-blue-600'},
+            {icon:'fa-python', label:'Django DRF', color:'text-emerald'},
+            {icon:'fa-database', label:'PostgreSQL', color:'text-blue-text'},
+            {icon:'fa-shield-halved', label:'JWT Auth', color:'text-amber'},
+            {icon:'fa-angular', label:'AngularJS SPA', color:'text-rose'}
+          ]">
+            <div class="d-flex align-items-center gap-2 p-2 rounded-3"
+                 style="background:var(--very-light-lavender); border:1px solid var(--border-color);">
+              <i class="fa-brands {{ tech.icon }}" ng-if="tech.icon.startsWith('fa-python') || tech.icon.startsWith('fa-angular')"></i>
+              <i class="fa-solid {{ tech.icon }}" ng-if="!tech.icon.startsWith('fa-python') && !tech.icon.startsWith('fa-angular')"
+                 style="color:var(--primary-purple); font-size:.9rem; flex-shrink:0;"></i>
+              <span class="fw-semibold text-dark" style="font-size:.78rem;">{{ tech.label }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-start gap-3 p-3 rounded-3"
+             style="background:var(--very-light-lavender); border:1px solid var(--border-color);">
+          <i class="fa-solid fa-shield-halved text-emerald fs-5 flex-shrink-0 mt-1"></i>
+          <div>
+            <div class="fw-bold text-dark" style="font-size:.9rem;">Data Security &amp; Encryption</div>
+            <div class="text-muted" style="font-size:.82rem;">
+              Your financial records are secured with JWT authentication standards and protected PostgreSQL database schemas with PBKDF2 password hashing.
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 </div>

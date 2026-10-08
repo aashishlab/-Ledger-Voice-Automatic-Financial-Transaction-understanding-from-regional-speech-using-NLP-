@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VoiceKhata - Smart Voice Accounting & Ledger for Businesses</title>
+  <title>VoiceKhata - Smart Voice Accounting & Financial Ledger</title>
 
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,20 +15,23 @@
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- FontAwesome Icons (self-hosted – no CDN tracking warnings) -->
+  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="css/fontawesome.min.css">
 
-  <!-- Custom Style -->
+  <!-- VoiceKhata Theme Style -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body ng-controller="MainController">
   {% verbatim %}
-  <!-- Navigation Bar -->
+  <!-- Desktop Navigation Bar -->
   <nav class="navbar navbar-expand-lg navbar-custom">
-    <div class="container-fluid">
+    <div class="container-fluid px-md-4">
       <a class="navbar-brand navbar-brand-custom" href="#!/">
-        <i class="fa-solid fa-microphone-lines text-primary"></i> VoiceKhata
+        <div class="brand-icon-wrapper">
+          <i class="fa-solid fa-microphone-lines"></i>
+        </div>
+        <span>VoiceKhata</span>
       </a>
 
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -36,15 +39,15 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" ng-if="isAuthenticated()">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1 ms-lg-4" ng-if="isAuthenticated()">
           <li class="nav-item">
             <a class="nav-link nav-link-custom" ng-class="{'active': isActive('/dashboard')}" href="#!/dashboard">
               <i class="fa-solid fa-chart-pie me-1"></i> Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link nav-link-custom" ng-class="{'active': isActive('/voice')}" href="#!/voice">
-              <i class="fa-solid fa-microphone text-primary me-1"></i> Voice Record
+            <a class="nav-link nav-link-custom mic-nav-badge ms-lg-1 me-lg-1" ng-class="{'active': isActive('/voice')}" href="#!/voice">
+              <i class="fa-solid fa-microphone me-1"></i> Speak & Record
             </a>
           </li>
           <li class="nav-item">
@@ -81,25 +84,30 @@
 
         <div class="d-flex align-items-center gap-3 ms-auto">
           <div ng-if="!isAuthenticated()" class="d-flex gap-2">
-            <a href="#!/login" class="btn btn-outline-blue btn-sm px-3">Login</a>
-            <a href="#!/register" class="btn btn-gradient-blue btn-sm px-3">Register</a>
+            <a href="#!/login" class="btn btn-outline-purple btn-sm px-3">Login</a>
+            <a href="#!/register" class="btn btn-gradient-purple btn-sm px-3">Register Account</a>
           </div>
 
           <div ng-if="isAuthenticated()" class="dropdown">
-            <button class="btn btn-light rounded-pill border d-flex align-items-center gap-2 px-3 py-1 shadow-sm"
-              type="button" data-bs-toggle="dropdown">
-              <i class="fa-solid fa-user-circle text-primary fs-5"></i>
-              <span class="fw-semibold text-dark">{{ currentUser.username || 'User' }}</span>
-              <i class="fa-solid fa-chevron-down text-muted small"></i>
+            <button class="btn user-avatar-btn d-flex align-items-center gap-2 shadow-sm" type="button" data-bs-toggle="dropdown">
+              <i class="fa-solid fa-circle-user text-purple fs-5"></i>
+              <span class="fw-semibold text-dark fs-6">{{ currentUser.username || 'User' }}</span>
+              <i class="fa-solid fa-chevron-down text-muted small ms-1"></i>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-              <li><a class="dropdown-item py-2" href="#!/settings"><i class="fa-solid fa-user-gear me-2 text-muted"></i>
-                  Account Settings</a></li>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2 p-2 rounded-4" style="border: 1px solid var(--border-color) !important;">
               <li>
-                <hr class="dropdown-divider">
+                <a class="dropdown-item py-2 rounded-3 fw-medium" href="#!/settings">
+                  <i class="fa-solid fa-user-gear me-2 text-purple"></i> Account Settings
+                </a>
               </li>
-              <li><a class="dropdown-item py-2 text-danger" href="javascript:void(0)" ng-click="logout()"><i
-                    class="fa-solid fa-right-from-bracket me-2"></i> Logout</a></li>
+              <li>
+                <hr class="dropdown-divider my-1 border-lavender">
+              </li>
+              <li>
+                <a class="dropdown-item py-2 rounded-3 text-danger fw-medium" href="javascript:void(0)" ng-click="logout()">
+                  <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -107,7 +115,7 @@
     </div>
   </nav>
 
-  <!-- Main View Container -->
+  <!-- Main Application Container -->
   <main class="flex-grow-1">
     <div ng-view class="container-fluid py-4 px-md-5"></div>
   </main>
@@ -127,9 +135,9 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-white border-top py-3 text-center text-muted small mt-auto">
+  <footer class="py-3 text-center text-muted small mt-auto">
     <div class="container">
-      <span>&copy; 2026 VoiceKhata. English Voice-Driven Accounting & Ledger System. All rights reserved.</span>
+      <span>&copy; 2026 VoiceKhata. AI-Powered Voice Bookkeeping & Ledger Management System. All rights reserved.</span>
     </div>
   </footer>
   {% endverbatim %}
@@ -166,6 +174,20 @@
   <script src="js/controllers/InsightController.js?v=2"></script>
   <script src="js/controllers/ReminderController.js"></script>
   <script src="js/controllers/SettingsController.js"></script>
+
+  <!-- Navbar scroll enhancement (UI only — no functionality change) -->
+  <script>
+    window.addEventListener('scroll', function () {
+      var nav = document.querySelector('.navbar-custom');
+      if (nav) {
+        if (window.scrollY > 30) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }
+    }, { passive: true });
+  </script>
 </body>
 
 </html>

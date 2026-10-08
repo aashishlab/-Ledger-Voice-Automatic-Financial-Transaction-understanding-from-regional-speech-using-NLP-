@@ -1,143 +1,213 @@
-<div>
-  <!-- Header -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-      <h2 class="fw-bold mb-1">Dashboard</h2>
-      <p class="text-muted small mb-0">Overview of your customers, credit balances, and recent ledger entries</p>
+<!-- =====================================================
+     DASHBOARD
+     ===================================================== -->
+<div class="animate-fade-up">
+
+  <!-- ── PAGE HEADER ──────────────────────────────────────────────────── -->
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+    <div class="page-header">
+      <h2><i class="fa-solid fa-chart-pie text-purple me-2"></i>Financial Dashboard</h2>
+      <p>Real-time overview of business performance, balances &amp; voice AI activity</p>
     </div>
-    <div>
-      <a href="#!/voice" class="btn btn-gradient-blue shadow-sm">
-        <i class="fa-solid fa-microphone me-2"></i> Voice Record
-      </a>
+    <a href="#!/voice" class="btn btn-gradient-purple d-inline-flex align-items-center gap-2 px-4 py-2 flex-shrink-0">
+      <i class="fa-solid fa-microphone"></i> Speak &amp; Record
+    </a>
+  </div>
+
+  <!-- ── VOICE ASSISTANT HERO CARD ────────────────────────────────────── -->
+  <div class="card-custom mb-4 p-4 p-md-5 position-relative overflow-hidden"
+       style="background: linear-gradient(140deg, var(--white) 0%, var(--very-light-lavender) 100%); border-color: var(--soft-purple);">
+    <!-- BG decoration -->
+    <div style="position:absolute; top:-40px; right:-40px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, rgba(124,58,237,.06), transparent 70%); pointer-events:none;"></div>
+    <div class="row align-items-center g-4">
+      <div class="col-lg-8">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="badge-custom badge-sales">
+            <i class="fa-solid fa-sparkles"></i> Voice-First AI Assistant
+          </span>
+        </div>
+        <h3 class="fw-extrabold text-dark mb-2" style="letter-spacing:-.02em; font-size:1.45rem;">
+          How can I help with your ledger today?
+        </h3>
+        <p class="text-muted mb-3" style="max-width:620px; font-size:.9rem; line-height:1.7;">
+          Record credit, payments or sales hands-free. Try:
+          <strong class="text-dark">"Sold 2kg Sugar to Ramesh for ₹160"</strong> or
+          <strong class="text-dark">"Received ₹500 from Amit"</strong>
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <a href="#!/voice" class="btn btn-gradient-purple px-4 py-2">
+            <i class="fa-solid fa-microphone me-2"></i>Start Voice Recording
+          </a>
+          <a href="#!/transactions" class="btn btn-outline-purple px-4 py-2">
+            <i class="fa-solid fa-plus me-2"></i>Add Manually
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-4 text-center d-none d-lg-flex justify-content-center">
+        <div class="position-relative" style="display:inline-block;">
+          <div style="width:96px; height:96px; border-radius:50%; background:var(--light-lavender); display:flex; align-items:center; justify-content:center; font-size:2.8rem; color:var(--primary-purple); box-shadow:var(--glow-purple);">
+            <i class="fa-solid fa-microphone-lines"></i>
+          </div>
+          <div style="position:absolute; top:-14px; left:-14px; right:-14px; bottom:-14px; border-radius:50%; border:2px solid var(--soft-purple); animation: pulse-ring 2s infinite; opacity:0;"></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Summary Metric Cards -->
-  <div class="row g-4 mb-4">
-    <div class="col-6 col-xl">
-      <div class="metric-card">
-        <div class="metric-icon metric-icon-blue">
+  <!-- ── METRIC CARDS ───────────────────────────────────────────────── -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-4 col-xl">
+      <div class="metric-card h-100">
+        <div class="metric-icon metric-icon-purple">
           <i class="fa-solid fa-users"></i>
         </div>
         <div>
-          <h3 class="metric-val">{{ summary.total_customers || 0 }}</h3>
-          <span class="metric-lbl">Total Customers</span>
+          <div class="metric-lbl">Customers</div>
+          <div class="metric-val">{{ summary.total_customers || 0 }}</div>
         </div>
       </div>
     </div>
 
-    <div class="col-6 col-xl">
-      <div class="metric-card">
-        <div class="metric-icon metric-icon-amber">
+    <div class="col-6 col-md-4 col-xl">
+      <div class="metric-card h-100">
+        <div class="metric-icon metric-icon-rose">
           <i class="fa-solid fa-hand-holding-dollar"></i>
         </div>
         <div>
-          <h3 class="metric-val">₹{{ (summary.total_credit || 0) | number:2 }}</h3>
-          <span class="metric-lbl">Total Credit (Gave)</span>
+          <div class="metric-lbl">Credit Given</div>
+          <div class="metric-val text-rose" style="font-size:1.3rem;">₹{{ (summary.total_credit || 0) | number:0 }}</div>
         </div>
       </div>
     </div>
 
-    <div class="col-6 col-xl">
-      <div class="metric-card">
+    <div class="col-6 col-md-4 col-xl">
+      <div class="metric-card h-100">
         <div class="metric-icon metric-icon-green">
           <i class="fa-solid fa-money-bill-trend-up"></i>
         </div>
         <div>
-          <h3 class="metric-val">₹{{ (summary.total_payments || 0) | number:2 }}</h3>
-          <span class="metric-lbl">Total Payments (Got)</span>
+          <div class="metric-lbl">Payments Got</div>
+          <div class="metric-val text-emerald" style="font-size:1.3rem;">₹{{ (summary.total_payments || 0) | number:0 }}</div>
         </div>
       </div>
     </div>
 
-    <div class="col-6 col-xl">
-      <div class="metric-card">
-        <div class="metric-icon" style="background: linear-gradient(135deg, #0ea5e9, #06b6d4); color: #fff;">
+    <div class="col-6 col-md-4 col-xl">
+      <div class="metric-card h-100">
+        <div class="metric-icon metric-icon-blue">
           <i class="fa-solid fa-cart-shopping"></i>
         </div>
         <div>
-          <h3 class="metric-val" style="color: #0ea5e9;">₹{{ (summary.total_sales || 0) | number:2 }}</h3>
-          <span class="metric-lbl">Total Sales</span>
+          <div class="metric-lbl">Total Sales</div>
+          <div class="metric-val" style="font-size:1.3rem; color:var(--blue-primary);">₹{{ (summary.total_sales || 0) | number:0 }}</div>
         </div>
       </div>
     </div>
 
-    <div class="col-6 col-xl">
-      <div class="metric-card">
-        <div class="metric-icon metric-icon-purple">
+    <div class="col-12 col-sm-6 col-md-4 col-xl">
+      <div class="metric-card h-100" style="border-color:var(--soft-purple); background:var(--very-light-lavender);">
+        <div class="metric-icon" style="background:var(--light-lavender); color:var(--primary-purple-dark);">
           <i class="fa-solid fa-clock-rotate-left"></i>
         </div>
         <div>
-          <h3 class="metric-val text-primary">₹{{ (summary.pending_amount || 0) | number:2 }}</h3>
-          <span class="metric-lbl">Pending Balance</span>
+          <div class="metric-lbl">Pending</div>
+          <div class="metric-val text-purple" style="font-size:1.3rem;">₹{{ (summary.pending_amount || 0) | number:0 }}</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Quick Action & Recent Activity Grid -->
-  <div class="row g-4 mb-4">
+  <!-- ── QUICK ACTIONS + RECENT ACTIVITY ───────────────────────────── -->
+  <div class="row g-4">
+
     <!-- Quick Actions -->
     <div class="col-lg-4">
       <div class="card-custom p-4 h-100">
-        <h5 class="fw-bold mb-3"><i class="fa-solid fa-bolt text-warning me-2"></i> Quick Actions</h5>
-        <div class="d-grid gap-3">
-          <a href="#!/voice" class="btn btn-outline-blue p-3 text-start d-flex align-items-center gap-3">
-            <div class="metric-icon metric-icon-blue border-0 m-0" style="width:40px; height:40px; font-size:1.2rem;">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <h5 class="fw-bold mb-0 text-dark">
+            <i class="fa-solid fa-bolt text-purple me-2"></i>Quick Actions
+          </h5>
+          <span class="badge-custom badge-sales">
+            <span class="dot-pulse"></span> AI Active
+          </span>
+        </div>
+
+        <div class="d-flex flex-column gap-2">
+          <a href="#!/voice" class="quick-action-btn text-decoration-none">
+            <div class="qa-icon metric-icon-purple" style="background:var(--light-lavender); color:var(--primary-purple);">
               <i class="fa-solid fa-microphone"></i>
             </div>
             <div>
-              <div class="fw-bold text-dark">Speak & Record</div>
-              <small class="text-muted">Record credit/payment in English</small>
+              <div class="fw-bold text-dark" style="font-size:.9rem;">Speak &amp; Record</div>
+              <div class="text-muted" style="font-size:.78rem;">Voice-first credit &amp; payment entry</div>
             </div>
+            <i class="fa-solid fa-chevron-right text-muted ms-auto small"></i>
           </a>
 
-          <a href="#!/customers" class="btn btn-light border p-3 text-start d-flex align-items-center gap-3">
-            <div class="metric-icon metric-icon-green border-0 m-0" style="width:40px; height:40px; font-size:1.2rem;">
+          <a href="#!/customers" class="quick-action-btn text-decoration-none">
+            <div class="qa-icon" style="background:var(--emerald-bg); color:var(--emerald-primary);">
               <i class="fa-solid fa-user-plus"></i>
             </div>
             <div>
-              <div class="fw-bold text-dark">Manage Customers</div>
-              <small class="text-muted">Add customer ledger profiles</small>
+              <div class="fw-bold text-dark" style="font-size:.9rem;">Manage Customers</div>
+              <div class="text-muted" style="font-size:.78rem;">Add &amp; view customer ledgers</div>
             </div>
+            <i class="fa-solid fa-chevron-right text-muted ms-auto small"></i>
           </a>
 
-          <a href="#!/inventory" class="btn btn-light border p-3 text-start d-flex align-items-center gap-3">
-            <div class="metric-icon metric-icon-amber border-0 m-0" style="width:40px; height:40px; font-size:1.2rem;">
+          <a href="#!/inventory" class="quick-action-btn text-decoration-none">
+            <div class="qa-icon" style="background:var(--amber-bg); color:var(--amber-primary);">
               <i class="fa-solid fa-boxes-stacked"></i>
             </div>
             <div>
-              <div class="fw-bold text-dark">Manage Inventory</div>
-              <small class="text-muted">Default prices for your products</small>
+              <div class="fw-bold text-dark" style="font-size:.9rem;">Manage Inventory</div>
+              <div class="text-muted" style="font-size:.78rem;">Set product prices &amp; stock</div>
             </div>
+            <i class="fa-solid fa-chevron-right text-muted ms-auto small"></i>
           </a>
 
-          <a href="#!/insights" class="btn btn-light border p-3 text-start d-flex align-items-center gap-3">
-            <div class="metric-icon metric-icon-purple border-0 m-0" style="width:40px; height:40px; font-size:1.2rem;">
+          <a href="#!/insights" class="quick-action-btn text-decoration-none">
+            <div class="qa-icon" style="background:var(--blue-bg); color:var(--blue-primary);">
               <i class="fa-solid fa-chart-pie"></i>
             </div>
             <div>
-              <div class="fw-bold text-dark">View Analytics</div>
-              <small class="text-muted">Monthly trends & payment recovery</small>
+              <div class="fw-bold text-dark" style="font-size:.9rem;">View Analytics</div>
+              <div class="text-muted" style="font-size:.78rem;">Sales trends &amp; recovery metrics</div>
             </div>
+            <i class="fa-solid fa-chevron-right text-muted ms-auto small"></i>
+          </a>
+
+          <a href="#!/reminders" class="quick-action-btn text-decoration-none">
+            <div class="qa-icon" style="background:var(--rose-bg); color:var(--rose-primary);">
+              <i class="fa-solid fa-bell"></i>
+            </div>
+            <div>
+              <div class="fw-bold text-dark" style="font-size:.9rem;">Due Reminders</div>
+              <div class="text-muted" style="font-size:.78rem;">Track &amp; send WhatsApp alerts</div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-muted ms-auto small"></i>
           </a>
         </div>
       </div>
     </div>
 
-    <!-- Recent Transactions Table -->
+    <!-- Recent Transactions -->
     <div class="col-lg-8">
-      <div class="card-custom p-4 h-100">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="fw-bold mb-0"><i class="fa-solid fa-list-check text-primary me-2"></i> Recent Transactions</h5>
-          <a href="#!/transactions" class="btn btn-sm btn-link text-primary fw-semibold p-0">View All</a>
+      <div class="card-custom h-100" style="overflow:hidden;">
+        <div class="d-flex justify-content-between align-items-center p-4 pb-3">
+          <h5 class="fw-bold mb-0 text-dark">
+            <i class="fa-solid fa-list-check text-purple me-2"></i>Recent Activity
+          </h5>
+          <a href="#!/transactions" class="btn btn-lavender btn-sm px-3">
+            View All <i class="fa-solid fa-arrow-right ms-1"></i>
+          </a>
         </div>
 
         <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0">
-            <thead class="table-light">
+          <table class="table table-custom align-middle mb-0">
+            <thead>
               <tr>
-                <th>Customer</th>
+                <th>Customer / Entry</th>
                 <th>Type</th>
                 <th>Amount</th>
                 <th>Date</th>
@@ -147,35 +217,44 @@
             <tbody>
               <tr ng-repeat="tx in summary.recent_transactions">
                 <td class="fw-semibold">
-                  <span ng-if="tx.items_data" class="text-success">
-                    <i class="fa-solid fa-cart-shopping me-1"></i>Sales
-                    <span class="badge bg-success-subtle text-success ms-1" ng-if="tx.items_data.length">{{ tx.items_data.length }} item(s)</span>
+                  <span ng-if="tx.items_data" class="text-purple">
+                    <i class="fa-solid fa-cart-shopping me-1"></i>Multi-Item Sale
+                    <span class="badge-custom badge-sales ms-1" ng-if="tx.items_data.length">{{ tx.items_data.length }} item(s)</span>
                   </span>
-                  <span ng-if="!tx.items_data">{{ tx.customer_detail.name || tx.customer_name_raw || 'General' }}</span>
+                  <span ng-if="!tx.items_data" class="text-dark">{{ tx.customer_detail.name || tx.customer_name_raw || 'General' }}</span>
                 </td>
                 <td>
-                  <span class="badge" ng-class="{
-                    'badge-credit': tx.transaction_type === 'credit',
-                    'badge-payment': tx.transaction_type === 'payment',
-                    'badge-sales': tx.transaction_type === 'sales',
-                    'badge-expense': tx.transaction_type === 'expense'
+                  <span class="badge-custom" ng-class="{
+                    'badge-credit':   tx.transaction_type === 'credit',
+                    'badge-payment':  tx.transaction_type === 'payment',
+                    'badge-sales':    tx.transaction_type === 'sales',
+                    'badge-expense':  tx.transaction_type === 'expense'
                   }">{{ tx.transaction_type | uppercase }}</span>
                 </td>
-                <td class="fw-bold" ng-class="{'text-danger': tx.transaction_type === 'credit', 'text-success': tx.transaction_type === 'payment' || tx.transaction_type === 'sales'}">
+                <td class="fw-bold" ng-class="{'text-rose': tx.transaction_type === 'credit', 'text-emerald': tx.transaction_type === 'payment' || tx.transaction_type === 'sales', 'text-amber': tx.transaction_type === 'expense'}">
                   ₹{{ tx.amount | number:2 }}
                 </td>
-                <td class="small text-muted">{{ tx.date }}</td>
+                <td class="text-muted" style="font-size:.82rem; white-space:nowrap;">{{ tx.date }}</td>
                 <td>
-                  <span class="badge rounded-pill border" ng-class="{'bg-success-subtle text-success border-success': tx.status === 'settled', 'bg-warning-subtle text-warning border-warning': tx.status === 'pending', 'bg-light text-dark': tx.status !== 'settled' && tx.status !== 'pending'}">{{ tx.status }}</span>
+                  <span class="status-badge"
+                        ng-class="{'status-settled': tx.status === 'settled', 'status-pending': tx.status === 'pending', 'status-missed': tx.status === 'missed'}">
+                    {{ tx.status }}
+                  </span>
                 </td>
               </tr>
               <tr ng-if="!summary.recent_transactions || summary.recent_transactions.length === 0">
-                <td colspan="5" class="text-center text-muted py-4">No recent transactions found. Click "Voice Record" to add your first transaction.</td>
+                <td colspan="5" class="text-center py-5">
+                  <div class="empty-state-icon mx-auto mb-2">
+                    <i class="fa-solid fa-receipt"></i>
+                  </div>
+                  <div class="text-muted small">No recent transactions. Click <a href="#!/voice" class="text-purple fw-semibold">Speak &amp; Record</a> to create your first one.</div>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
+
   </div>
 </div>

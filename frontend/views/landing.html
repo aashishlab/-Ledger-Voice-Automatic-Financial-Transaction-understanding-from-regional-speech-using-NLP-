@@ -1,70 +1,151 @@
-<div class="hero-section text-center">
+<!-- =====================================================
+     LANDING PAGE — VoiceKhata Hero
+     ===================================================== -->
+<div class="hero-section">
   <div class="container">
-    <div class="badge bg-primary-subtle text-primary fw-bold px-3 py-2 rounded-pill mb-3">
-      <i class="fa-solid fa-bolt me-1"></i> AI-Powered English Voice Accounting
-    </div>
-    <h1 class="hero-title text-dark">
-      Manage Ledger & Credit via <span class="text-primary">English Voice</span>
-    </h1>
-    <p class="hero-subtitle">
-      Speak naturally in English to record customer credit, payments, sales, and dues. Automated AI parsing extracts amounts, names, and due dates instantly.
-    </p>
-    <div class="d-flex justify-content-center gap-3 mb-5">
-      <a href="#!/register" class="btn btn-gradient-blue btn-lg px-4 py-2" ng-if="!isAuthenticated">Get Started Free</a>
-      <a href="#!/dashboard" class="btn btn-gradient-blue btn-lg px-4 py-2" ng-if="isAuthenticated">Go to Dashboard</a>
-      <a href="#!/login" class="btn btn-outline-blue btn-lg px-4 py-2" ng-if="!isAuthenticated">Login Account</a>
+
+    <!-- AI Badge -->
+    <div class="hero-badge animate-fade-in">
+      <i class="fa-solid fa-sparkles text-purple"></i>
+      AI-Powered English Voice Bookkeeping
     </div>
 
-    <!-- Sample Voice Cards -->
-    <div class="row g-4 mt-2 justify-content-center">
-      <div class="col-12"><h5 class="fw-bold text-muted uppercase tracking-wide">Try Speaking Natural Phrases Like:</h5></div>
-      <div class="col-md-3" ng-repeat="sample in samplePhrases">
-        <div class="card-custom p-3 text-start h-100 border-top border-primary border-3">
+    <!-- Hero Title -->
+    <h1 class="hero-title text-dark animate-fade-up" style="animation-delay:.05s">
+      Voice-First Financial<br>
+      <span style="background: linear-gradient(135deg, var(--primary-purple), var(--bright-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+        Ledger Management
+      </span>
+    </h1>
+
+    <p class="hero-subtitle animate-fade-up" style="animation-delay:.1s">
+      Speak naturally in English to record credit, payments, sales &amp; dues.
+      AI extracts customer names, amounts &amp; dates — instantly.
+    </p>
+
+    <!-- CTA Buttons -->
+    <div class="d-flex justify-content-center gap-3 mb-5 animate-fade-up" style="animation-delay:.15s">
+      <a href="#!/register" class="btn btn-gradient-purple btn-lg px-5 py-3"
+         style="font-size:.95rem;" ng-if="!isAuthenticated">
+        <i class="fa-solid fa-rocket me-2"></i>Get Started Free
+      </a>
+      <a href="#!/dashboard" class="btn btn-gradient-purple btn-lg px-5 py-3"
+         style="font-size:.95rem;" ng-if="isAuthenticated">
+        <i class="fa-solid fa-chart-pie me-2"></i>Go to Dashboard
+      </a>
+      <a href="#!/login" class="btn btn-outline-purple btn-lg px-5 py-3"
+         style="font-size:.95rem;" ng-if="!isAuthenticated">
+        Login Account
+      </a>
+    </div>
+
+    <!-- Animated mic illustration -->
+    <div class="d-flex justify-content-center mb-5 animate-fade-up" style="animation-delay:.2s">
+      <div class="position-relative d-inline-flex align-items-center justify-content-center"
+           style="width:80px; height:80px;">
+        <div style="width:80px; height:80px; border-radius:50%; background:var(--light-lavender); display:flex; align-items:center; justify-content:center; font-size:2rem; color:var(--primary-purple); box-shadow: var(--glow-purple); z-index:2; position:relative;">
+          <i class="fa-solid fa-microphone-lines"></i>
+        </div>
+        <div style="position:absolute; top:-14px; left:-14px; right:-14px; bottom:-14px; border-radius:50%; border:2px solid var(--soft-purple); animation: pulse-ring 2s infinite cubic-bezier(.215,.61,.355,1); opacity:0;"></div>
+        <div style="position:absolute; top:-28px; left:-28px; right:-28px; bottom:-28px; border-radius:50%; border:1.5px solid var(--light-lavender); animation: pulse-ring 2s .7s infinite cubic-bezier(.215,.61,.355,1); opacity:0;"></div>
+      </div>
+    </div>
+
+    <!-- Sample Voice Phrases -->
+    <div class="row g-3 justify-content-center animate-fade-up" style="animation-delay:.25s">
+      <div class="col-12 mb-1">
+        <h6 class="fw-bold text-muted text-uppercase" style="letter-spacing:.08em; font-size:.72rem;">
+          Try speaking phrases like:
+        </h6>
+      </div>
+      <div class="col-md-4 col-lg-3" ng-repeat="sample in samplePhrases">
+        <div class="phrase-card">
           <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="badge badge-sales">{{ sample.type }}</span>
-            <span class="fw-bold text-primary">{{ sample.amount }}</span>
+            <span class="badge-custom badge-sales">{{ sample.type }}</span>
+            <span class="fw-bold text-purple" style="font-size:.9rem;">{{ sample.amount }}</span>
           </div>
-          <p class="mb-1 text-dark fw-medium">"{{ sample.text }}"</p>
-          <small class="text-muted"><i class="fa-solid fa-user me-1"></i> {{ sample.name }}</small>
+          <p class="mb-1 text-dark fw-semibold" style="font-size:.9rem;">"{{ sample.text }}"</p>
+          <small class="text-muted"><i class="fa-solid fa-user me-1 text-purple"></i>{{ sample.name }}</small>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Features Section -->
-<div class="container py-5">
+<!-- ── WHY CHOOSE VOICEKHATA ─────────────────────────────────────────── -->
+<div class="container pb-5 pt-2">
   <div class="text-center mb-5">
-    <h2 class="fw-bold text-dark">Why Choose VoiceKhata?</h2>
-    <p class="text-muted">Built for modern store owners, freelancers, and businesses who value speed and clarity.</p>
+    <h2 class="fw-extrabold text-dark" style="letter-spacing:-.025em;">Why Choose VoiceKhata?</h2>
+    <p class="text-muted" style="max-width:580px; margin:0 auto;">
+      Built for modern shop owners, freelancers &amp; businesses who value speed and financial clarity.
+    </p>
   </div>
 
   <div class="row g-4">
     <div class="col-md-4">
-      <div class="card-custom p-4 h-100">
-        <div class="metric-icon metric-icon-blue mb-3">
+      <div class="feature-card">
+        <div class="feature-icon-wrap">
           <i class="fa-solid fa-microphone-lines"></i>
         </div>
-        <h4 class="fw-bold mb-2">Speech Recognition</h4>
-        <p class="text-muted mb-0">Speak in natural English. Hands-free transaction logging with real-time speech to text conversion.</p>
+        <h4 class="fw-bold mb-2 text-dark" style="font-size:1.1rem;">AI Speech Recognition</h4>
+        <p class="text-muted mb-0" style="font-size:.88rem;">
+          Speak naturally in English. Hands-free transaction logging with real-time speech-to-text powered by Web Speech API.
+        </p>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card-custom p-4 h-100">
-        <div class="metric-icon metric-icon-purple mb-3">
+      <div class="feature-card">
+        <div class="feature-icon-wrap" style="background:var(--emerald-bg); color:var(--emerald-primary);">
           <i class="fa-solid fa-brain"></i>
         </div>
-        <h4 class="fw-bold mb-2">Dual AI & Rule Parser</h4>
-        <p class="text-muted mb-0">Gemini AI parsing with fallback regex engine automatically extracts customer names, amounts, dues, and transaction types.</p>
+        <h4 class="fw-bold mb-2 text-dark" style="font-size:1.1rem;">Dual AI + NLP Parser</h4>
+        <p class="text-muted mb-0" style="font-size:.88rem;">
+          spaCy NLP &amp; regex engine auto-extract customer names, quantities, unit prices, dues &amp; transaction types.
+        </p>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card-custom p-4 h-100">
-        <div class="metric-icon metric-icon-green mb-3">
+      <div class="feature-card">
+        <div class="feature-icon-wrap" style="background:var(--amber-bg); color:var(--amber-primary);">
           <i class="fa-solid fa-chart-line"></i>
         </div>
-        <h4 class="fw-bold mb-2">Financial Insights</h4>
-        <p class="text-muted mb-0">Track total credit, recovered payments, and pending dues with interactive graphs and reminder alerts.</p>
+        <h4 class="fw-bold mb-2 text-dark" style="font-size:1.1rem;">Smart Financial Insights</h4>
+        <p class="text-muted mb-0" style="font-size:.88rem;">
+          Track credit, payments, pending dues with interactive charts and WhatsApp reminder alerts.
+        </p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card">
+        <div class="feature-icon-wrap" style="background:var(--blue-bg); color:var(--blue-primary);">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <h4 class="fw-bold mb-2 text-dark" style="font-size:1.1rem;">Customer Ledger</h4>
+        <p class="text-muted mb-0" style="font-size:.88rem;">
+          Full per-customer ledger with outstanding balances, transaction history &amp; WhatsApp reminders.
+        </p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card">
+        <div class="feature-icon-wrap" style="background:var(--rose-bg); color:var(--rose-primary);">
+          <i class="fa-solid fa-boxes-stacked"></i>
+        </div>
+        <h4 class="fw-bold mb-2 text-dark" style="font-size:1.1rem;">Inventory Management</h4>
+        <p class="text-muted mb-0" style="font-size:.88rem;">
+          Track product stock &amp; default prices. Prices auto-apply when omitted in voice entries.
+        </p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card">
+        <div class="feature-icon-wrap" style="background:var(--light-lavender); color:var(--primary-purple);">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h4 class="fw-bold mb-2 text-dark" style="font-size:1.1rem;">Secure &amp; Encrypted</h4>
+        <p class="text-muted mb-0" style="font-size:.88rem;">
+          JWT auth, PostgreSQL database &amp; secure API endpoints protect your financial data.
+        </p>
       </div>
     </div>
   </div>

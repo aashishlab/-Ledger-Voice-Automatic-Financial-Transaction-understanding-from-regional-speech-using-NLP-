@@ -61,7 +61,7 @@ app.controller('InsightController', ['$scope', 'insightService', 'toastService',
   $scope.renderAllCharts = function(data) {
     if (!data) return;
 
-    // 1. Sales Trend Line Chart
+    // 1. Sales Trend Line Chart (Purple / Emerald Theme)
     createChart('salesTrendChart', {
       type: 'line',
       data: {
@@ -69,11 +69,12 @@ app.controller('InsightController', ['$scope', 'insightService', 'toastService',
         datasets: [{
           label: 'Sales Revenue (₹)',
           data: data.trends.sales,
-          borderColor: '#10b981',
-          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+          borderColor: '#7c3aed',
+          backgroundColor: 'rgba(124, 58, 237, 0.12)',
           fill: true,
           tension: 0.35,
           pointRadius: 4,
+          pointBackgroundColor: '#7c3aed',
           pointHoverRadius: 6
         }]
       },
@@ -94,14 +95,14 @@ app.controller('InsightController', ['$scope', 'insightService', 'toastService',
           {
             label: 'Sales (₹)',
             data: data.trends.sales,
-            backgroundColor: '#0ea5e9',
-            borderRadius: 5
+            backgroundColor: '#7c3aed',
+            borderRadius: 6
           },
           {
             label: 'Expenses (₹)',
             data: data.trends.expenses,
             backgroundColor: '#f43f5e',
-            borderRadius: 5
+            borderRadius: 6
           }
         ]
       },
@@ -143,8 +144,8 @@ app.controller('InsightController', ['$scope', 'insightService', 'toastService',
           {
             label: 'Net Cash Flow (₹)',
             data: netCashFlowSeries,
-            borderColor: '#6366f1',
-            backgroundColor: 'rgba(99, 102, 241, 0.08)',
+            borderColor: '#8b5cf6',
+            backgroundColor: 'rgba(139, 92, 246, 0.1)',
             fill: true,
             tension: 0.3,
             borderWidth: 3
@@ -235,7 +236,7 @@ app.controller('InsightController', ['$scope', 'insightService', 'toastService',
           datasets: [{
             label: 'Expense Amount (₹)',
             data: data.expense_categories.map(function(c) { return c.amount; }),
-            backgroundColor: '#ec4899',
+            backgroundColor: '#f43f5e',
             borderRadius: 4
           }]
         },
@@ -258,7 +259,7 @@ app.controller('InsightController', ['$scope', 'insightService', 'toastService',
           labels: mixKeys,
           datasets: [{
             data: mixVals,
-            backgroundColor: ['#0ea5e9', '#10b981', '#8b5cf6', '#f43f5e', '#f59e0b', '#64748b']
+            backgroundColor: ['#7c3aed', '#10b981', '#8b5cf6', '#f43f5e', '#f59e0b', '#64748b']
           }]
         },
         options: {

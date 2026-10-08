@@ -1,59 +1,110 @@
-<div class="row justify-content-center py-4">
-  <div class="col-md-6 col-lg-5">
-    <div class="card-custom p-4 p-md-5">
+<!-- =====================================================
+     REGISTER PAGE
+     ===================================================== -->
+<div class="row justify-content-center align-items-center py-4" style="min-height: calc(100vh - 140px);">
+  <div class="col-md-7 col-lg-6 col-xl-5">
+    <div class="auth-card p-4 p-md-5 animate-fade-up">
+
+      <!-- Icon & Title -->
       <div class="text-center mb-4">
-        <div class="metric-icon metric-icon-blue mx-auto mb-3">
+        <div class="auth-icon-ring" style="background: linear-gradient(135deg, var(--emerald-bg), rgba(16,185,129,.2)); color: var(--emerald-text);">
           <i class="fa-solid fa-user-plus"></i>
         </div>
-        <h3 class="fw-bold">Create VoiceKhata Account</h3>
-        <p class="text-muted small">Start managing your ledger with English voice</p>
+        <h3 class="fw-extrabold text-dark mb-1" style="letter-spacing:-.02em;">Create VoiceKhata Account</h3>
+        <p class="text-muted" style="font-size:.88rem;">Start managing your ledger with AI voice bookkeeping</p>
       </div>
 
-      <div ng-if="errorMessage" class="alert alert-danger py-2 small" role="alert">
-        {{ errorMessage }}
+      <!-- Error Alert -->
+      <div ng-if="errorMessage" class="alert alert-danger d-flex align-items-center gap-2 mb-4" role="alert">
+        <i class="fa-solid fa-circle-exclamation flex-shrink-0"></i>
+        <span style="font-size:.875rem;">{{ errorMessage }}</span>
       </div>
 
+      <!-- Register Form -->
       <form ng-submit="doRegister()">
+        <!-- Row 1: Username + Email -->
         <div class="row g-3 mb-3">
           <div class="col-md-6">
-            <label class="form-label fw-semibold small text-muted">Username *</label>
-            <input type="text" class="form-control" ng-model="registerData.username" placeholder="johndoe" required>
+            <label class="form-label">Username *</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-at text-purple"></i></span>
+              <input type="text" class="form-control" id="reg-username"
+                     ng-model="registerData.username"
+                     placeholder="johndoe" required autocomplete="username">
+            </div>
           </div>
           <div class="col-md-6">
-            <label class="form-label fw-semibold small text-muted">Email</label>
-            <input type="email" class="form-control" ng-model="registerData.email" placeholder="john@example.com">
+            <label class="form-label">Email Address</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-envelope text-purple"></i></span>
+              <input type="email" class="form-control" id="reg-email"
+                     ng-model="registerData.email"
+                     placeholder="john@example.com" autocomplete="email">
+            </div>
           </div>
         </div>
 
+        <!-- Row 2: Business + Phone -->
         <div class="row g-3 mb-3">
           <div class="col-md-6">
-            <label class="form-label fw-semibold small text-muted">Business Store Name</label>
-            <input type="text" class="form-control" ng-model="registerData.business_name" placeholder="John Enterprise">
+            <label class="form-label">Business / Store Name</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-store text-purple"></i></span>
+              <input type="text" class="form-control" id="reg-business"
+                     ng-model="registerData.business_name"
+                     placeholder="John Enterprise">
+            </div>
           </div>
           <div class="col-md-6">
-            <label class="form-label fw-semibold small text-muted">Phone Number</label>
-            <input type="text" class="form-control" ng-model="registerData.phone" placeholder="+91 9876543210">
+            <label class="form-label">Phone Number</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-phone text-purple"></i></span>
+              <input type="text" class="form-control" id="reg-phone"
+                     ng-model="registerData.phone"
+                     placeholder="+91 9876543210" autocomplete="tel">
+            </div>
           </div>
         </div>
 
+        <!-- Row 3: Password + Confirm -->
         <div class="row g-3 mb-4">
           <div class="col-md-6">
-            <label class="form-label fw-semibold small text-muted">Password *</label>
-            <input type="password" class="form-control" ng-model="registerData.password" placeholder="At least 6 characters" required>
+            <label class="form-label">Password *</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-lock text-purple"></i></span>
+              <input type="password" class="form-control" id="reg-password"
+                     ng-model="registerData.password"
+                     placeholder="At least 6 characters" required autocomplete="new-password">
+            </div>
           </div>
           <div class="col-md-6">
-            <label class="form-label fw-semibold small text-muted">Confirm Password *</label>
-            <input type="password" class="form-control" ng-model="registerData.confirm_password" placeholder="Repeat password" required>
+            <label class="form-label">Confirm Password *</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-lock-open text-purple"></i></span>
+              <input type="password" class="form-control" id="reg-confirm-password"
+                     ng-model="registerData.confirm_password"
+                     placeholder="Repeat password" required autocomplete="new-password">
+            </div>
           </div>
         </div>
 
-        <button type="submit" class="btn btn-gradient-blue w-100 py-2 mb-3" ng-disabled="isLoading">
-          <span ng-if="isLoading" class="spinner-border spinner-border-sm me-2"></span>
-          Create Account
+        <button type="submit" id="reg-submit"
+                class="btn btn-gradient-purple w-100 py-3 mb-3"
+                style="font-size:.95rem;"
+                ng-disabled="isLoading">
+          <span ng-if="isLoading">
+            <span class="spinner-border spinner-border-sm me-2"></span>Creating account...
+          </span>
+          <span ng-if="!isLoading">
+            <i class="fa-solid fa-user-check me-2"></i>Create Account
+          </span>
         </button>
 
-        <div class="text-center text-muted small">
-          Already registered? <a href="#!/login" class="text-primary fw-semibold">Login here</a>
+        <div class="divider-with-text my-3">or</div>
+
+        <div class="text-center" style="font-size:.875rem;">
+          <span class="text-muted">Already registered?</span>
+          <a href="#!/login" class="fw-bold ms-1" style="color: var(--primary-purple);">Sign in here</a>
         </div>
       </form>
     </div>
