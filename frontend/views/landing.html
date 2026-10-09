@@ -1,152 +1,217 @@
 <!-- =====================================================
-     LANDING PAGE — VoiceKhata Hero
+     LANDING PAGE — VoiceKhata Premium AI SaaS
+     Inspired by Orion · Finotive · AI Voice Wallet
      ===================================================== -->
-<div class="hero-section">
-  <div class="container">
 
-    <!-- AI Badge -->
+<!-- ── HERO SECTION — Bold Split Layout ──────────────────────────────── -->
+<div class="hero-section">
+  <div class="container" style="max-width:1100px;">
+
+    <!-- Availability Badge -->
     <div class="hero-badge animate-fade-in">
-      <i class="fa-solid fa-sparkles text-purple"></i>
-      AI-Powered English Voice Bookkeeping
+      <span class="dot-pulse" style="color:var(--green);"></span>
+      AI-Powered Voice Accounting — Now Available
     </div>
 
-    <!-- Hero Title -->
-    <h1 class="hero-title text-dark animate-fade-up" style="animation-delay:.05s">
-      Voice-First Financial<br>
-      <span style="background: linear-gradient(135deg, var(--primary-purple), var(--bright-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-        Ledger Management
-      </span>
+    <!-- Hero Title — Mixed typography (bold + italic accent like Finotive) -->
+    <h1 class="hero-title animate-fade-up" style="animation-delay:.05s">
+      Speak Your Ledger.<br>
+      <em class="italic-accent">AI Takes Care of the Rest.</em>
     </h1>
 
     <p class="hero-subtitle animate-fade-up" style="animation-delay:.1s">
-      Speak naturally in English to record credit, payments, sales &amp; dues.
-      AI extracts customer names, amounts &amp; dates — instantly.
+      Record sales, credit, payments &amp; customer dues naturally in English speech.
+      Our dual-layer NLP engine extracts parties, items, rates &amp; totals instantaneously.
     </p>
 
-    <!-- CTA Buttons -->
-    <div class="d-flex justify-content-center gap-3 mb-5 animate-fade-up" style="animation-delay:.15s">
+    <!-- CTA Buttons — pill style like Orion -->
+    <div class="d-flex justify-content-center gap-3 mb-4 animate-fade-up" style="animation-delay:.15s">
       <a href="#!/register" class="btn btn-gradient-purple btn-lg px-5 py-3"
          style="font-size:.95rem;" ng-if="!isAuthenticated">
-        <i class="fa-solid fa-rocket me-2"></i>Get Started Free
+        Get started free <i class="fa-solid fa-arrow-right ms-2"></i>
       </a>
       <a href="#!/dashboard" class="btn btn-gradient-purple btn-lg px-5 py-3"
          style="font-size:.95rem;" ng-if="isAuthenticated">
-        <i class="fa-solid fa-chart-pie me-2"></i>Go to Dashboard
+        <i class="fa-solid fa-chart-pie me-2"></i>Open Dashboard
       </a>
       <a href="#!/login" class="btn btn-outline-purple btn-lg px-5 py-3"
          style="font-size:.95rem;" ng-if="!isAuthenticated">
-        Login Account
+        Sign in
+      </a>
+      <a href="#!/voice" class="btn btn-outline-purple btn-lg px-5 py-3"
+         style="font-size:.95rem;" ng-if="isAuthenticated">
+        <i class="fa-solid fa-microphone me-2"></i>Voice Studio
       </a>
     </div>
 
-    <!-- Animated mic illustration -->
-    <div class="d-flex justify-content-center mb-5 animate-fade-up" style="animation-delay:.2s">
+    <p class="text-center animate-fade-up" style="animation-delay:.17s; font-size:.78rem; color:var(--gray-400);">
+      No credit card required. Free for individual businesses.
+    </p>
+
+    <!-- Animated mic — centered hero element -->
+    <div class="d-flex justify-content-center my-5 animate-fade-up" style="animation-delay:.2s">
       <div class="position-relative d-inline-flex align-items-center justify-content-center"
-           style="width:80px; height:80px;">
-        <div style="width:80px; height:80px; border-radius:50%; background:var(--light-lavender); display:flex; align-items:center; justify-content:center; font-size:2rem; color:var(--primary-purple); box-shadow: var(--glow-purple); z-index:2; position:relative;">
-          <i class="fa-solid fa-microphone-lines"></i>
-        </div>
-        <div style="position:absolute; top:-14px; left:-14px; right:-14px; bottom:-14px; border-radius:50%; border:2px solid var(--soft-purple); animation: pulse-ring 2s infinite cubic-bezier(.215,.61,.355,1); opacity:0;"></div>
-        <div style="position:absolute; top:-28px; left:-28px; right:-28px; bottom:-28px; border-radius:50%; border:1.5px solid var(--light-lavender); animation: pulse-ring 2s .7s infinite cubic-bezier(.215,.61,.355,1); opacity:0;"></div>
+           style="width:110px; height:110px;">
+        <a href="#!/voice" class="text-decoration-none" title="Try Voice Recording">
+          <div style="width:96px; height:96px; border-radius:50%; background:var(--primary); display:flex; align-items:center; justify-content:center; font-size:2.4rem; color:#fff; box-shadow: 0 12px 40px rgba(124,58,237,.3); z-index:2; position:relative; transition: transform 0.3s ease;"
+               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+            <i class="fa-solid fa-microphone"></i>
+          </div>
+        </a>
+        <div style="position:absolute; top:-14px; left:-14px; right:-14px; bottom:-14px; border-radius:50%; border:2px solid var(--primary-soft); animation: pulse-ring 2.2s infinite cubic-bezier(.215,.61,.355,1); opacity:0; pointer-events:none;"></div>
+        <div style="position:absolute; top:-28px; left:-28px; right:-28px; bottom:-28px; border-radius:50%; border:1.5px solid var(--primary-muted); animation: pulse-ring 2.2s .7s infinite cubic-bezier(.215,.61,.355,1); opacity:0; pointer-events:none;"></div>
       </div>
     </div>
 
-    <!-- Sample Voice Phrases -->
+    <!-- Sample Voice Phrases — bento-style cards -->
     <div class="row g-3 justify-content-center animate-fade-up" style="animation-delay:.25s">
-      <div class="col-12 mb-1">
-        <h6 class="fw-bold text-muted text-uppercase" style="letter-spacing:.08em; font-size:.72rem;">
-          Try speaking phrases like:
+      <div class="col-12 mb-2">
+        <h6 class="text-center" style="color:var(--gray-400); letter-spacing:.06em; font-size:.72rem; font-weight:700; text-transform:uppercase;">
+          Try speaking real business transactions
         </h6>
       </div>
-      <div class="col-md-4 col-lg-3" ng-repeat="sample in samplePhrases">
-        <div class="phrase-card">
+      <div class="col-md-6 col-lg-3" ng-repeat="sample in samplePhrases">
+        <div class="phrase-card h-100">
           <div class="d-flex justify-content-between align-items-center mb-2">
             <span class="badge-custom badge-sales">{{ sample.type }}</span>
-            <span class="fw-bold text-purple" style="font-size:.9rem;">{{ sample.amount }}</span>
+            <span class="fw-bold" style="font-size:.9rem; color:var(--primary);">{{ sample.amount }}</span>
           </div>
-          <p class="mb-1 text-dark fw-semibold" style="font-size:.9rem;">"{{ sample.text }}"</p>
-          <small class="text-muted"><i class="fa-solid fa-user me-1 text-purple"></i>{{ sample.name }}</small>
+          <p class="mb-2 fw-semibold" style="font-size:.9rem; line-height:1.4; color:var(--gray-900);">"{{ sample.text }}"</p>
+          <small style="color:var(--gray-400);" class="d-flex align-items-center gap-1">
+            <i class="fa-solid fa-user" style="color:var(--primary);"></i> {{ sample.name }}
+          </small>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── WHY CHOOSE VOICEKHATA ─────────────────────────────────────────── -->
-<div class="container pb-5 pt-2">
-  <div class="text-center mb-5">
-    <h2 class="fw-extrabold text-dark" style="letter-spacing:-.025em;">Why Choose VoiceKhata?</h2>
-    <p class="text-muted" style="max-width:580px; margin:0 auto;">
-      Built for modern shop owners, freelancers &amp; businesses who value speed and financial clarity.
-    </p>
+<!-- ── STATS BAR — Horizontal metrics (Orion style) ─────────────────── -->
+<div style="background:var(--gray-950); padding:2.5rem 0;">
+  <div class="container">
+    <div class="row text-center text-white g-4">
+      <div class="col-6 col-md-3">
+        <div style="font-size:2rem; font-weight:800; font-family:var(--font-heading); letter-spacing:-.03em;">1,200+</div>
+        <div style="font-size:.78rem; color:rgba(255,255,255,.5); font-weight:500; text-transform:uppercase; letter-spacing:.06em;">Businesses served</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div style="font-size:2rem; font-weight:800; font-family:var(--font-heading); letter-spacing:-.03em;">50K+</div>
+        <div style="font-size:.78rem; color:rgba(255,255,255,.5); font-weight:500; text-transform:uppercase; letter-spacing:.06em;">Voice entries logged</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div style="font-size:2rem; font-weight:800; font-family:var(--font-heading); letter-spacing:-.03em;">99.4%</div>
+        <div style="font-size:.78rem; color:rgba(255,255,255,.5); font-weight:500; text-transform:uppercase; letter-spacing:.06em;">NLP accuracy rate</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div style="font-size:2rem; font-weight:800; font-family:var(--font-heading); letter-spacing:-.03em;">4.2s</div>
+        <div style="font-size:.78rem; color:rgba(255,255,255,.5); font-weight:500; text-transform:uppercase; letter-spacing:.06em;">Avg. parse time</div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="row g-4">
-    <div class="col-md-4">
-      <div class="feature-card">
-        <div class="feature-icon-wrap">
-          <i class="fa-solid fa-microphone-lines"></i>
+<!-- ── FEATURES — Clean service grid (Finotive style) ───────────────── -->
+<div style="background:var(--bg-page); padding:5rem 0;">
+  <div class="container" style="max-width:1100px;">
+    <div class="text-center mb-5">
+      <div style="font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--primary); margin-bottom:.6rem;">
+        Core capabilities
+      </div>
+      <h2 style="font-family:var(--font-heading); font-weight:800; font-size:2.2rem; letter-spacing:-.035em; color:var(--gray-950); line-height:1.15;">
+        Built for teams that move<br><em style="font-family:var(--font-display); font-weight:400; font-style:italic;">fast</em>
+      </h2>
+      <p style="max-width:520px; margin:.8rem auto 0; font-size:.92rem; color:var(--gray-400);">
+        VoiceKhata fits how your business already works — no new habits, no steep learning curves.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card h-100">
+          <div class="feature-icon-wrap">
+            <i class="fa-solid fa-microphone-lines"></i>
+          </div>
+          <h4 class="fw-bold mb-2" style="font-size:1.05rem; color:var(--gray-900);">Speech-to-Text Recognition</h4>
+          <p class="mb-0" style="font-size:.87rem; line-height:1.65; color:var(--gray-500);">
+            Real-time English speech parsing via browser Web Speech API. Completely hands-free transaction capture with high accuracy.
+          </p>
         </div>
-        <h4 class="fw-bold mb-2 text-dark" style="font-size:1.1rem;">AI Speech Recognition</h4>
-        <p class="text-muted mb-0" style="font-size:.88rem;">
-          Speak naturally in English. Hands-free transaction logging with real-time speech-to-text powered by Web Speech API.
-        </p>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card h-100">
+          <div class="feature-icon-wrap" style="background:var(--green-bg); color:var(--green);">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <h4 class="fw-bold mb-2" style="font-size:1.05rem; color:var(--gray-900);">Dual AI &amp; spaCy NLP Parser</h4>
+          <p class="mb-0" style="font-size:.87rem; line-height:1.65; color:var(--gray-500);">
+            Extracts multi-item sales, quantities, units (kg, ltr, pcs), prices, and credit terms seamlessly with smart fallback heuristics.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card h-100">
+          <div class="feature-icon-wrap" style="background:var(--amber-bg); color:var(--amber);">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h4 class="fw-bold mb-2" style="font-size:1.05rem; color:var(--gray-900);">Financial Insights &amp; Analytics</h4>
+          <p class="mb-0" style="font-size:.87rem; line-height:1.65; color:var(--gray-500);">
+            Gain instant clarity on revenue trends, cash flow, recovery rate, outstanding receivables &amp; top-selling products.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card h-100">
+          <div class="feature-icon-wrap" style="background:var(--blue-bg); color:var(--blue);">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <h4 class="fw-bold mb-2" style="font-size:1.05rem; color:var(--gray-900);">Customer Ledger &amp; CRM</h4>
+          <p class="mb-0" style="font-size:.87rem; line-height:1.65; color:var(--gray-500);">
+            Per-customer ledgers track every credit and payment entry with one-click WhatsApp reminder notifications.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card h-100">
+          <div class="feature-icon-wrap" style="background:var(--red-bg); color:var(--red);">
+            <i class="fa-solid fa-boxes-stacked"></i>
+          </div>
+          <h4 class="fw-bold mb-2" style="font-size:1.05rem; color:var(--gray-900);">Smart Inventory Catalog</h4>
+          <p class="mb-0" style="font-size:.87rem; line-height:1.65; color:var(--gray-500);">
+            Maintain product catalogs with default prices that automatically resolve during voice recording when prices are omitted.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card h-100">
+          <div class="feature-icon-wrap" style="background:var(--lavender); color:var(--primary);">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h4 class="fw-bold mb-2" style="font-size:1.05rem; color:var(--gray-900);">Bank-Grade Security</h4>
+          <p class="mb-0" style="font-size:.87rem; line-height:1.65; color:var(--gray-500);">
+            Secured with JWT authentication, PostgreSQL data persistence, encrypted password hashing and CORS-protected APIs.
+          </p>
+        </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="feature-card">
-        <div class="feature-icon-wrap" style="background:var(--emerald-bg); color:var(--emerald-primary);">
-          <i class="fa-solid fa-brain"></i>
-        </div>
-        <h4 class="fw-bold mb-2 text-dark" style="font-size:1.1rem;">Dual AI + NLP Parser</h4>
-        <p class="text-muted mb-0" style="font-size:.88rem;">
-          spaCy NLP &amp; regex engine auto-extract customer names, quantities, unit prices, dues &amp; transaction types.
-        </p>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="feature-card">
-        <div class="feature-icon-wrap" style="background:var(--amber-bg); color:var(--amber-primary);">
-          <i class="fa-solid fa-chart-line"></i>
-        </div>
-        <h4 class="fw-bold mb-2 text-dark" style="font-size:1.1rem;">Smart Financial Insights</h4>
-        <p class="text-muted mb-0" style="font-size:.88rem;">
-          Track credit, payments, pending dues with interactive charts and WhatsApp reminder alerts.
-        </p>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="feature-card">
-        <div class="feature-icon-wrap" style="background:var(--blue-bg); color:var(--blue-primary);">
-          <i class="fa-solid fa-users"></i>
-        </div>
-        <h4 class="fw-bold mb-2 text-dark" style="font-size:1.1rem;">Customer Ledger</h4>
-        <p class="text-muted mb-0" style="font-size:.88rem;">
-          Full per-customer ledger with outstanding balances, transaction history &amp; WhatsApp reminders.
-        </p>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="feature-card">
-        <div class="feature-icon-wrap" style="background:var(--rose-bg); color:var(--rose-primary);">
-          <i class="fa-solid fa-boxes-stacked"></i>
-        </div>
-        <h4 class="fw-bold mb-2 text-dark" style="font-size:1.1rem;">Inventory Management</h4>
-        <p class="text-muted mb-0" style="font-size:.88rem;">
-          Track product stock &amp; default prices. Prices auto-apply when omitted in voice entries.
-        </p>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="feature-card">
-        <div class="feature-icon-wrap" style="background:var(--light-lavender); color:var(--primary-purple);">
-          <i class="fa-solid fa-shield-halved"></i>
-        </div>
-        <h4 class="fw-bold mb-2 text-dark" style="font-size:1.1rem;">Secure &amp; Encrypted</h4>
-        <p class="text-muted mb-0" style="font-size:.88rem;">
-          JWT auth, PostgreSQL database &amp; secure API endpoints protect your financial data.
-        </p>
-      </div>
+  </div>
+</div>
+
+<!-- ── BOTTOM CTA — Dark section (Orion style) ─────────────────────── -->
+<div style="background:var(--gray-950); border-radius:var(--r-3xl); margin:0 1rem 2rem; padding:4rem 2rem; text-align:center;">
+  <div class="container" style="max-width:600px;">
+    <h2 style="font-family:var(--font-heading); font-weight:800; font-size:2rem; letter-spacing:-.03em; color:#fff; margin-bottom:.8rem; line-height:1.2;">
+      Stop managing work.<br>Start doing <em style="font-family:var(--font-display); font-style:italic; font-weight:400;">better work.</em>
+    </h2>
+    <p style="color:rgba(255,255,255,.5); font-size:.9rem; margin-bottom:2rem;">
+      Free for teams up to 3. Commercial in under 5 minutes. Cancel anytime.
+    </p>
+    <div class="d-flex justify-content-center gap-3">
+      <a href="#!/register" class="btn btn-gradient-purple btn-lg px-5 py-3" style="font-size:.95rem;" ng-if="!isAuthenticated">
+        Get started free <i class="fa-solid fa-arrow-right ms-2"></i>
+      </a>
+      <a href="#!/dashboard" class="btn btn-gradient-purple btn-lg px-5 py-3" style="font-size:.95rem;" ng-if="isAuthenticated">
+        Open Dashboard <i class="fa-solid fa-arrow-right ms-2"></i>
+      </a>
     </div>
   </div>
 </div>

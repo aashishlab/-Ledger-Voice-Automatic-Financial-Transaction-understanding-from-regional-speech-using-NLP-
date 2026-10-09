@@ -5,9 +5,14 @@
 
   <!-- ── HEADER ───────────────────────────────────────────────────────── -->
   <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
-    <div class="page-header">
-      <h2><i class="fa-solid fa-receipt text-purple me-2"></i>Transaction Ledger History</h2>
-      <p>View, search, filter &amp; manage all credit, payment, sales and expense entries</p>
+    <div class="page-header mb-0">
+      <div class="d-inline-flex align-items-center gap-2 mb-1">
+        <span class="badge-custom badge-sales px-3 py-1">
+          <i class="fa-solid fa-receipt"></i> Ledger History
+        </span>
+      </div>
+      <h2>Transaction Ledger History</h2>
+      <p>Search, filter &amp; manage credit, payment, sales and business expense records</p>
     </div>
     <div class="d-flex gap-2 flex-wrap">
       <a href="#!/voice" class="btn btn-outline-purple d-inline-flex align-items-center gap-2 px-3 py-2 flex-shrink-0">
@@ -17,20 +22,20 @@
               id="add-transaction-btn"
               data-bs-toggle="modal" data-bs-target="#transactionModal"
               ng-click="openAddModal()">
-        <i class="fa-solid fa-plus"></i> Add Transaction
+        <i class="fa-solid fa-plus"></i> Add Entry
       </button>
     </div>
   </div>
 
   <!-- ── SEARCH & FILTER ─────────────────────────────────────────────── -->
-  <div class="card-custom p-3 mb-4">
+  <div class="bento-card p-3 mb-4">
     <div class="row g-3 align-items-center">
       <div class="col-md-6 col-lg-5">
         <div class="input-group">
           <span class="input-group-text"><i class="fa-solid fa-magnifying-glass text-purple"></i></span>
           <input type="text" class="form-control"
                  id="tx-search"
-                 placeholder="Search by customer or description..."
+                 placeholder="Search by customer, notes or amount..."
                  ng-model="searchQuery" ng-change="loadTransactions()">
         </div>
       </div>
@@ -38,9 +43,9 @@
         <select class="form-select" id="tx-type-filter"
                 ng-model="filterType" ng-change="loadTransactions()">
           <option value="">All Transaction Types</option>
-          <option value="credit">Credit (Gave)</option>
-          <option value="payment">Payment (Got)</option>
-          <option value="sales">Sales</option>
+          <option value="credit">Credit (Gave / Udhaar)</option>
+          <option value="payment">Payment (Received / Got)</option>
+          <option value="sales">Sales Order</option>
           <option value="expense">Expense</option>
         </select>
       </div>
@@ -67,14 +72,13 @@
           <!-- Transaction Row -->
           <tr ng-repeat-start="tx in transactions"
               ng-click="tx._showItems = tx.items_data && !tx._showItems ? !tx._showItems : (tx.items_data ? !tx._showItems : false)"
-              ng-class="{'cursor-pointer': tx.items_data}"
-              style="cursor: {{ tx.items_data ? 'pointer' : 'default' }};">
+              ng-class="{'cursor-pointer': tx.items_data}">
             <td class="text-muted" style="font-size:.82rem; white-space:nowrap; font-weight:500;">{{ tx.date }}</td>
             <td class="fw-semibold">
               <span ng-if="tx.items_data" class="text-purple d-inline-flex align-items-center gap-1">
-                <i class="fa-solid fa-cart-shopping"></i> Sales
+                <i class="fa-solid fa-cart-shopping"></i> Multi-Item Sale
               </span>
-              <span ng-if="!tx.items_data" class="text-dark">{{ tx.customer_detail.name || tx.customer_name_raw || 'General' }}</span>
+              <span ng-if="!tx.items_data" class="text-dark">{{ tx.customer_detail.name || tx.customer_name_raw || 'General Entry' }}</span>
             </td>
             <td>
               <div class="d-flex flex-wrap gap-1 align-items-center">
@@ -84,18 +88,18 @@
                   'badge-sales':   tx.transaction_type === 'sales',
                   'badge-expense': tx.transaction_type === 'expense'
                 }">{{ tx.transaction_type | uppercase }}</span>
-                <span ng-if="tx.items_data" class="badge-custom badge-info" title="Click to expand items">
+                <span ng-if="tx.items_data" class="badge-custom badge-sales" title="Click row to expand items">
                   <i class="fa-solid fa-box-open"></i> {{ tx.items_data.length }} item(s)
                 </span>
               </div>
             </td>
             <td class="fw-bold"
                 ng-class="{'text-rose': tx.transaction_type === 'credit', 'text-emerald': tx.transaction_type === 'payment' || tx.transaction_type === 'sales', 'text-amber': tx.transaction_type === 'expense'}"
-                style="font-size:.95rem; white-space:nowrap;">
+                style="font-size:.92rem; white-space:nowrap;">
               ₹{{ tx.amount | number:2 }}
             </td>
             <td class="text-muted" style="font-size:.82rem;">{{ tx.due_date || '—' }}</td>
-            <td class="text-muted" style="font-size:.82rem; max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+            <td class="text-muted" style="font-size:.82rem; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
               <span ng-if="!tx.items_data">{{ tx.description || '—' }}</span>
               <span ng-if="tx.items_data" class="text-purple fw-semibold" style="font-size:.8rem;">
                 <i class="fa-solid" ng-class="tx._showItems ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
@@ -112,7 +116,7 @@
               <div class="d-inline-flex gap-1">
                 <button class="btn-action-round" ng-if="tx.transaction_type !== 'expense'"
                         ng-click="$event.stopPropagation(); sendWhatsApp(tx)"
-                        title="Send WhatsApp">
+                        title="Send WhatsApp Notification">
                   <i class="fa-brands fa-whatsapp" style="color:#25D366;"></i>
                 </button>
                 <button class="btn-action-round"
@@ -132,12 +136,12 @@
 
           <!-- Expandable Sales Items Row -->
           <tr ng-repeat-end ng-if="tx.items_data && tx._showItems"
-              style="background:var(--very-light-lavender);">
+              style="background:var(--lavender-light);">
             <td colspan="8" class="p-4">
-              <div class="fw-bold text-purple mb-3" style="font-size:.9rem;">
+              <div class="fw-bold text-purple mb-3" style="font-size:.88rem;">
                 <i class="fa-solid fa-list-ul me-2"></i>Sold Items Breakdown
               </div>
-              <div class="table-custom-container border-0" style="max-width:600px; box-shadow:none;">
+              <div class="table-custom-container border-0 bg-white" style="max-width:640px; box-shadow:none;">
                 <table class="table table-custom mb-0" style="font-size:.85rem;">
                   <thead>
                     <tr>
@@ -175,16 +179,16 @@
                 <div class="empty-state-icon">
                   <i class="fa-solid fa-receipt"></i>
                 </div>
-                <h5>No Transactions Yet</h5>
-                <p>Use Voice Recording or Add Transaction to create your first entry.</p>
-                <div class="d-flex justify-content-center gap-2 mt-3">
-                  <a href="#!/voice" class="btn btn-gradient-purple px-4">
+                <h5 class="fw-bold text-dark mb-1">No Transactions Found</h5>
+                <p class="text-muted small mb-4">Use Voice Recording or Add Transaction to record your first entry.</p>
+                <div class="d-flex justify-content-center gap-2">
+                  <a href="#!/voice" class="btn btn-gradient-purple px-4 py-2">
                     <i class="fa-solid fa-microphone me-1"></i> Voice Entry
                   </a>
-                  <button class="btn btn-outline-purple px-4"
+                  <button class="btn btn-outline-purple px-4 py-2"
                           data-bs-toggle="modal" data-bs-target="#transactionModal"
                           ng-click="openAddModal()">
-                    <i class="fa-solid fa-plus me-1"></i> Add Manually
+                    <i class="fa-solid fa-plus me-1"></i> Add Entry
                   </button>
                 </div>
               </div>
@@ -198,15 +202,15 @@
   <!-- ══ TRANSACTION ADD/EDIT MODAL ════════════════════════════════════ -->
   <div class="modal fade" id="transactionModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
+      <div class="modal-content shadow-lg border-0 rounded-4">
+        <div class="modal-header border-bottom pb-3">
           <h5 class="modal-header-title fw-bold text-dark mb-0">
             <i class="fa-solid fa-receipt text-purple me-2"></i>
             {{ editMode ? 'Edit Transaction' : 'Add New Transaction' }}
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body p-4">
           <form ng-submit="saveTransaction()">
             <div class="mb-3">
               <label class="form-label">Customer Name *</label>
@@ -253,12 +257,12 @@
             <div class="mb-4">
               <label class="form-label">Description / Notes</label>
               <textarea class="form-control" rows="2" ng-model="currentTx.description"
-                        placeholder="Optional notes"></textarea>
+                        placeholder="Optional notes or context"></textarea>
             </div>
 
-            <div class="d-flex justify-content-end gap-2">
-              <button type="button" class="btn btn-lavender px-3" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-gradient-purple px-4" data-bs-dismiss="modal">
+            <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+              <button type="button" class="btn btn-lavender px-3 py-2 fw-semibold" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-gradient-purple px-4 py-2 fw-bold" data-bs-dismiss="modal">
                 <i class="fa-solid fa-check me-1"></i>
                 {{ editMode ? 'Save Changes' : 'Save Transaction' }}
               </button>

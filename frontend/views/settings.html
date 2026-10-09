@@ -5,34 +5,39 @@
 
   <!-- ── HEADER ───────────────────────────────────────────────────────── -->
   <div class="page-header mb-4">
-    <h2><i class="fa-solid fa-gear text-purple me-2"></i>Account &amp; System Settings</h2>
-    <p>Manage profile details, security preferences, business info &amp; application settings</p>
+    <div class="d-inline-flex align-items-center gap-2 mb-1">
+      <span class="badge-custom badge-sales px-3 py-1">
+        <i class="fa-solid fa-gear"></i> Preferences &amp; Config
+      </span>
+    </div>
+    <h2>Account &amp; System Settings</h2>
+    <p>Manage profile credentials, security keys, UPI payment links &amp; app preferences</p>
   </div>
 
   <div class="row g-4">
 
     <!-- ── SIDEBAR NAV ──────────────────────────────────────────────── -->
     <div class="col-md-4 col-lg-3">
-      <div class="card-custom p-3">
+      <div class="bento-card p-3">
         <div class="d-flex flex-column gap-1">
           <div class="settings-nav-item" ng-class="{'active': activeTab === 'profile'}"
                ng-click="activeTab = 'profile'">
-            <i class="fa-solid fa-circle-user text-purple fs-5"></i>
+            <i class="fa-solid fa-circle-user fs-5"></i>
             <span>User Profile</span>
           </div>
           <div class="settings-nav-item" ng-class="{'active': activeTab === 'security'}"
                ng-click="activeTab = 'security'">
-            <i class="fa-solid fa-shield-halved text-purple fs-5"></i>
-            <span>Security &amp; Password</span>
+            <i class="fa-solid fa-shield-halved fs-5"></i>
+            <span>Security &amp; Auth</span>
           </div>
           <div class="settings-nav-item" ng-class="{'active': activeTab === 'prefs'}"
                ng-click="activeTab = 'prefs'">
-            <i class="fa-solid fa-sliders text-purple fs-5"></i>
-            <span>Preferences &amp; UPI</span>
+            <i class="fa-solid fa-sliders fs-5"></i>
+            <span>UPI &amp; Preferences</span>
           </div>
           <div class="settings-nav-item" ng-class="{'active': activeTab === 'info'}"
                ng-click="activeTab = 'info'">
-            <i class="fa-solid fa-circle-info text-purple fs-5"></i>
+            <i class="fa-solid fa-circle-info fs-5"></i>
             <span>About VoiceKhata</span>
           </div>
         </div>
@@ -43,42 +48,41 @@
     <div class="col-md-8 col-lg-9">
 
       <!-- ── PROFILE TAB ──────────────────────────────────────────────── -->
-      <div class="card-custom p-4 p-md-5" ng-if="activeTab === 'profile'">
+      <div class="bento-card p-4 p-md-5" ng-if="activeTab === 'profile'">
         <!-- Profile Header -->
-        <div class="d-flex align-items-center gap-4 mb-5 pb-4"
-             style="border-bottom: 1px solid var(--border-color);">
-          <div class="customer-avatar" style="width:64px; height:64px; font-size:1.7rem; flex-shrink:0;">
+        <div class="d-flex align-items-center gap-4 mb-4 pb-4 border-bottom">
+          <div class="customer-avatar" style="width:64px; height:64px; font-size:1.6rem; flex-shrink:0;">
             {{ (userProfile.username || 'U').charAt(0) | uppercase }}
           </div>
           <div>
-            <h4 class="fw-bold mb-0 text-dark" style="letter-spacing:-.015em;">
+            <h4 class="fw-bold mb-1 text-dark" style="letter-spacing:-.015em; font-family:var(--font-heading);">
               {{ userProfile.username || 'User Profile' }}
             </h4>
             <div class="text-muted" style="font-size:.875rem;">
               <i class="fa-solid fa-envelope me-1 text-purple"></i>
-              {{ userProfile.email || 'Registered Account' }}
+              {{ userProfile.email || 'Registered Business Account' }}
             </div>
-            <span class="badge-custom badge-payment mt-1">
+            <span class="badge-custom badge-payment mt-2">
               <i class="fa-solid fa-circle-check"></i> Active Account
             </span>
           </div>
         </div>
 
-        <h5 class="fw-bold mb-3 text-dark">
-          <i class="fa-solid fa-store text-purple me-2"></i>Business Information
+        <h5 class="fw-bold mb-3 text-dark" style="font-size:1rem; font-family:var(--font-heading);">
+          <i class="fa-solid fa-store text-purple me-2"></i>Business &amp; Account Information
         </h5>
 
         <div class="row g-3 mb-3">
           <div class="col-md-6">
             <label class="form-label">Username</label>
             <input type="text" class="form-control"
-                   style="background:var(--very-light-lavender);"
+                   style="background:var(--gray-50);"
                    ng-model="userProfile.username" readonly>
           </div>
           <div class="col-md-6">
             <label class="form-label">Email Address</label>
             <input type="email" class="form-control"
-                   style="background:var(--very-light-lavender);"
+                   style="background:var(--gray-50);"
                    ng-model="userProfile.email" readonly>
           </div>
         </div>
@@ -100,15 +104,15 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-gradient-purple px-4" ng-click="saveProfile()">
-          <i class="fa-solid fa-save me-2"></i>Save Profile
+        <button class="btn btn-gradient-purple px-4 py-2 fw-bold" ng-click="saveProfile()">
+          <i class="fa-solid fa-save me-2"></i>Save Profile Details
         </button>
       </div>
 
       <!-- ── SECURITY TAB ──────────────────────────────────────────────── -->
-      <div class="card-custom p-4 p-md-5" ng-if="activeTab === 'security'">
-        <h4 class="fw-bold mb-4 text-dark">
-          <i class="fa-solid fa-shield-halved text-purple me-2"></i>Security &amp; Password
+      <div class="bento-card p-4 p-md-5" ng-if="activeTab === 'security'">
+        <h4 class="fw-bold mb-4 text-dark" style="font-family:var(--font-heading);">
+          <i class="fa-solid fa-shield-halved text-purple me-2"></i>Security &amp; Password Update
         </h4>
         <form ng-submit="updatePassword()">
           <div class="mb-3" style="max-width:440px;">
@@ -138,42 +142,42 @@
                      placeholder="Re-enter new password">
             </div>
           </div>
-          <button type="submit" class="btn btn-gradient-purple px-4">
+          <button type="submit" class="btn btn-gradient-purple px-4 py-2 fw-bold">
             <i class="fa-solid fa-shield-check me-2"></i>Update Password
           </button>
         </form>
 
-        <div style="height:1px; background:var(--border-color); margin:2rem 0;"></div>
+        <div style="height:1px; background:var(--gray-200); margin:2rem 0;"></div>
 
         <div class="d-flex align-items-start gap-3 p-3 rounded-3"
-             style="background:var(--emerald-bg); border:1px solid rgba(16,185,129,.2);">
+             style="background:var(--green-bg); border:1px solid rgba(34,197,94,.2);">
           <i class="fa-solid fa-circle-check text-emerald fs-5 flex-shrink-0 mt-1"></i>
           <div>
-            <div class="fw-bold text-emerald" style="font-size:.9rem;">JWT Authentication Active</div>
+            <div class="fw-bold text-emerald" style="font-size:.9rem;">JWT Authentication Standard</div>
             <div class="text-muted" style="font-size:.82rem;">
-              Your session is secured with JWT tokens. Passwords are hashed with Django's default PBKDF2 algorithm.
+              Your active session is cryptographically signed with JWT tokens. Passwords use PBKDF2 hash encryption.
             </div>
           </div>
         </div>
       </div>
 
       <!-- ── PREFERENCES TAB ────────────────────────────────────────────── -->
-      <div class="card-custom p-4 p-md-5" ng-if="activeTab === 'prefs'">
-        <h4 class="fw-bold mb-4 text-dark">
-          <i class="fa-solid fa-sliders text-purple me-2"></i>Application Preferences
+      <div class="bento-card p-4 p-md-5" ng-if="activeTab === 'prefs'">
+        <h4 class="fw-bold mb-4 text-dark" style="font-family:var(--font-heading);">
+          <i class="fa-solid fa-sliders text-purple me-2"></i>Application &amp; Payment Preferences
         </h4>
         <form ng-submit="saveSettings()">
           <!-- Voice Language -->
-          <div class="mb-4 p-3 rounded-3" style="background:var(--very-light-lavender); border:1px solid var(--border-color);">
+          <div class="mb-4 p-3 rounded-3" style="background:var(--lavender-light); border:1px solid var(--gray-200);">
             <div class="d-flex align-items-center gap-2 mb-1">
               <i class="fa-solid fa-microphone text-purple"></i>
-              <span class="fw-bold text-dark" style="font-size:.9rem;">Voice Language Model</span>
+              <span class="fw-bold text-dark" style="font-size:.9rem;">Voice Recognition Engine</span>
             </div>
-            <div class="fw-semibold text-purple-dark" style="font-size:.9rem;">
-              English Speech (Web Speech API) — Active
+            <div class="fw-semibold text-purple" style="font-size:.88rem;">
+              English Speech (Web Speech API + spaCy NLP) — Online
             </div>
             <small class="text-muted">
-              VoiceKhata uses browser SpeechRecognition with English spaCy NLP extraction.
+              VoiceKhata captures regional accent speech and extracts financial metadata automatically.
             </small>
           </div>
 
@@ -203,7 +207,7 @@
           </div>
 
           <div class="mb-4 d-flex align-items-center gap-3 p-3 rounded-3"
-               style="background:var(--very-light-lavender); border:1px solid var(--border-color);">
+               style="background:var(--lavender-light); border:1px solid var(--gray-200);">
             <div class="form-check form-switch mb-0">
               <input class="form-check-input" type="checkbox" role="switch"
                      id="enable-notif"
@@ -211,41 +215,41 @@
                      style="width:2.2em; height:1.2em;">
             </div>
             <label class="form-check-label fw-semibold text-dark mb-0" for="enable-notif"
-                   style="font-size:.9rem;">
+                   style="font-size:.88rem;">
               <i class="fa-solid fa-bell me-2 text-purple"></i>
-              Enable Due Date Notifications
+              Enable Due Date Notifications &amp; Alerts
             </label>
           </div>
 
-          <button type="submit" class="btn btn-gradient-purple px-4">
+          <button type="submit" class="btn btn-gradient-purple px-4 py-2 fw-bold">
             <i class="fa-solid fa-save me-2"></i>Save Preferences
           </button>
         </form>
       </div>
 
       <!-- ── ABOUT TAB ─────────────────────────────────────────────────── -->
-      <div class="card-custom p-4 p-md-5" ng-if="activeTab === 'info'">
+      <div class="bento-card p-4 p-md-5" ng-if="activeTab === 'info'">
         <div class="text-center mb-4">
-          <div style="width:80px; height:80px; border-radius:var(--radius-lg); background:linear-gradient(135deg,var(--primary-purple),var(--primary-purple-dark)); display:flex; align-items:center; justify-content:center; font-size:2rem; color:#fff; margin:0 auto 1rem; box-shadow:var(--glow-purple);">
+          <div style="width:72px; height:72px; border-radius:var(--r-xl); background:var(--primary); display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:#fff; margin:0 auto 1rem; box-shadow:0 8px 24px rgba(124,58,237,.25);">
             <i class="fa-solid fa-microphone-lines"></i>
           </div>
-          <h4 class="fw-bold text-dark mb-1">VoiceKhata</h4>
-          <p class="text-muted" style="font-size:.875rem;">AI-Powered Voice Accounting &amp; Financial Ledger</p>
+          <h4 class="fw-bold text-dark mb-1" style="font-family:var(--font-heading);">VoiceKhata</h4>
+          <p class="text-muted" style="font-size:.875rem;">AI-Powered Voice Bookkeeping &amp; Financial Ledger</p>
         </div>
 
         <p class="text-muted" style="font-size:.9rem; line-height:1.75;">
-          VoiceKhata is an intelligent voice-first bookkeeping application built with
-          <strong class="text-dark">AngularJS</strong>,
+          VoiceKhata is a smart, voice-first ledger application that combines
+          <strong class="text-dark">AngularJS SPA</strong>,
           <strong class="text-dark">Django REST Framework</strong>,
           <strong class="text-dark">PostgreSQL</strong>, and
-          <strong class="text-dark">spaCy NLP</strong>.
-          Speak naturally in English to record credit, payments, sales and expenses instantly.
+          <strong class="text-dark">spaCy Natural Language Processing</strong>.
+          Speak transactions naturally in English to record customer credit, payments, sales orders and operating expenses with zero typing friction.
         </p>
 
-        <div style="height:1px; background:var(--border-color); margin:1.5rem 0;"></div>
+        <div style="height:1px; background:var(--gray-200); margin:1.5rem 0;"></div>
 
         <!-- Tech Stack -->
-        <h5 class="fw-bold mb-3 text-dark" style="font-size:1rem;">Technology Stack</h5>
+        <h5 class="fw-bold mb-3 text-dark" style="font-size:1rem; font-family:var(--font-heading);">Technology Stack</h5>
         <div class="row g-2 mb-4">
           <div class="col-6 col-md-4" ng-repeat="tech in [
             {icon:'fa-microphone', label:'Web Speech API', color:'text-purple'},
@@ -256,22 +260,22 @@
             {icon:'fa-angular', label:'AngularJS SPA', color:'text-rose'}
           ]">
             <div class="d-flex align-items-center gap-2 p-2 rounded-3"
-                 style="background:var(--very-light-lavender); border:1px solid var(--border-color);">
+                 style="background:var(--gray-50); border:1px solid var(--gray-200);">
               <i class="fa-brands {{ tech.icon }}" ng-if="tech.icon.startsWith('fa-python') || tech.icon.startsWith('fa-angular')"></i>
               <i class="fa-solid {{ tech.icon }}" ng-if="!tech.icon.startsWith('fa-python') && !tech.icon.startsWith('fa-angular')"
-                 style="color:var(--primary-purple); font-size:.9rem; flex-shrink:0;"></i>
+                 style="color:var(--primary); font-size:.88rem; flex-shrink:0;"></i>
               <span class="fw-semibold text-dark" style="font-size:.78rem;">{{ tech.label }}</span>
             </div>
           </div>
         </div>
 
         <div class="d-flex align-items-start gap-3 p-3 rounded-3"
-             style="background:var(--very-light-lavender); border:1px solid var(--border-color);">
+             style="background:var(--gray-50); border:1px solid var(--gray-200);">
           <i class="fa-solid fa-shield-halved text-emerald fs-5 flex-shrink-0 mt-1"></i>
           <div>
-            <div class="fw-bold text-dark" style="font-size:.9rem;">Data Security &amp; Encryption</div>
+            <div class="fw-bold text-dark" style="font-size:.88rem;">Enterprise Data Protection</div>
             <div class="text-muted" style="font-size:.82rem;">
-              Your financial records are secured with JWT authentication standards and protected PostgreSQL database schemas with PBKDF2 password hashing.
+              All records are protected under user-isolated PostgreSQL schemas with PBKDF2 encryption and secure token lifecycle headers.
             </div>
           </div>
         </div>

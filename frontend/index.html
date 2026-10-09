@@ -6,11 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VoiceKhata - Smart Voice Accounting & Financial Ledger</title>
 
-  <!-- Google Fonts: Inter -->
+  <!-- Google Fonts: Plus Jakarta Sans & DM Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
 
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -94,14 +93,14 @@
               <span class="fw-semibold text-dark fs-6">{{ currentUser.username || 'User' }}</span>
               <i class="fa-solid fa-chevron-down text-muted small ms-1"></i>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2 p-2 rounded-4" style="border: 1px solid var(--border-color) !important;">
+            <ul class="dropdown-menu dropdown-menu-end shadow-md border-0 mt-2 p-2 rounded-3">
               <li>
-                <a class="dropdown-item py-2 rounded-3 fw-medium" href="#!/settings">
+                <a class="dropdown-item py-2 fw-medium" href="#!/settings">
                   <i class="fa-solid fa-user-gear me-2 text-purple"></i> Account Settings
                 </a>
               </li>
               <li>
-                <hr class="dropdown-divider my-1 border-lavender">
+                <hr class="dropdown-divider my-1">
               </li>
               <li>
                 <a class="dropdown-item py-2 rounded-3 text-danger fw-medium" href="javascript:void(0)" ng-click="logout()">

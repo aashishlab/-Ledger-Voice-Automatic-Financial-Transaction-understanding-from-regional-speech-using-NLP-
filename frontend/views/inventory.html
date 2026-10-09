@@ -5,29 +5,34 @@
 
   <!-- ── HEADER ───────────────────────────────────────────────────────── -->
   <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
-    <div class="page-header">
-      <h2><i class="fa-solid fa-boxes-stacked text-purple me-2"></i>Inventory Management</h2>
-      <p>Manage product stock &amp; default prices — auto-applied when prices are omitted in voice entries</p>
+    <div class="page-header mb-0">
+      <div class="d-inline-flex align-items-center gap-2 mb-1">
+        <span class="badge-custom badge-sales px-3 py-1">
+          <i class="fa-solid fa-boxes-stacked"></i> Catalog &amp; Pricing
+        </span>
+      </div>
+      <h2>Inventory &amp; Product Catalog</h2>
+      <p>Manage product stock &amp; default prices — auto-applied when prices are omitted during voice entries</p>
     </div>
     <div class="d-flex gap-2 flex-wrap">
+      <button class="btn btn-outline-purple d-inline-flex align-items-center gap-2 px-3 py-2 flex-shrink-0"
+              id="voice-add-inventory-btn"
+              ng-click="openVoiceAdd()">
+        <i class="fa-solid fa-microphone"></i> Add by Voice
+      </button>
       <button class="btn btn-gradient-purple d-inline-flex align-items-center gap-2 px-4 py-2 flex-shrink-0"
               id="add-inventory-btn"
               data-bs-toggle="modal" data-bs-target="#inventoryFormModal"
               ng-click="openAddModal()">
         <i class="fa-solid fa-plus"></i> Add Product
       </button>
-      <button class="btn btn-outline-purple d-inline-flex align-items-center gap-2 px-3 py-2 flex-shrink-0"
-              id="voice-add-inventory-btn"
-              ng-click="openVoiceAdd()">
-        <i class="fa-solid fa-microphone"></i> Add by Voice
-      </button>
     </div>
   </div>
 
   <!-- ── SEARCH + COUNTER ────────────────────────────────────────────── -->
-  <div class="card-custom p-3 mb-4">
+  <div class="bento-card p-3 mb-4">
     <div class="row g-3 align-items-center">
-      <div class="col-md-6 col-lg-4">
+      <div class="col-md-6 col-lg-5">
         <div class="input-group">
           <span class="input-group-text"><i class="fa-solid fa-magnifying-glass text-purple"></i></span>
           <input type="text" class="form-control"
@@ -36,68 +41,71 @@
                  ng-model="searchQuery" ng-change="onSearchChange()">
         </div>
       </div>
-      <div class="col-md-6 col-lg-8 d-flex justify-content-end" ng-if="inventoryItems.length > 0">
-        <span class="badge-custom badge-sales">
-          <i class="fa-solid fa-cube me-1"></i> {{ inventoryItems.length }} product(s) in stock
+      <div class="col-md-6 col-lg-7 d-flex justify-content-md-end" ng-if="inventoryItems.length > 0">
+        <span class="badge-custom badge-sales px-3 py-1">
+          <i class="fa-solid fa-cube me-1"></i> {{ inventoryItems.length }} catalog product(s)
         </span>
       </div>
     </div>
   </div>
 
   <!-- ══ VOICE ADD PANEL ════════════════════════════════════════════════ -->
-  <div ng-if="isVoiceMode" class="card-custom p-4 p-md-5 mb-4"
-       style="border-color:var(--soft-purple); background:var(--very-light-lavender);">
-    <div class="d-flex justify-content-between align-items-center mb-3">
+  <div ng-if="isVoiceMode" class="bento-card p-4 p-md-5 mb-4 animate-fade-up"
+       style="border-color:var(--primary-soft); background:linear-gradient(135deg, var(--lavender-light), #FFFFFF); box-shadow: var(--shadow-sm);">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
       <div>
-        <h5 class="fw-bold mb-1 text-purple">
-          <i class="fa-solid fa-microphone me-2"></i>Add Inventory by Voice
+        <h5 class="fw-bold mb-1 text-purple" style="font-family:var(--font-heading);">
+          <i class="fa-solid fa-microphone me-2"></i>Add Inventory Item by Voice
         </h5>
         <p class="text-muted mb-0" style="font-size:.85rem;">
           Speak: <strong class="text-dark">"Sugar 2 kg for ₹100"</strong> or
-          <strong class="text-dark">"Add wheat at ₹100 per kg"</strong>
+          <strong class="text-dark">"Add wheat 10kg at ₹45 per kg"</strong>
         </p>
       </div>
-      <button class="btn btn-lavender btn-sm px-3" ng-click="closeVoiceAdd()">
+      <button class="btn btn-lavender btn-sm px-3 fw-semibold" ng-click="closeVoiceAdd()">
         <i class="fa-solid fa-xmark me-1"></i> Close
       </button>
     </div>
 
     <!-- Mic Button -->
-    <div class="text-center mb-3">
-      <button type="button" class="mic-btn"
-              ng-class="{'recording': isRecording}"
-              ng-click="toggleVoiceRecording()"
-              style="width:72px; height:72px; font-size:1.65rem;">
-        <i class="fa-solid" ng-class="isRecording ? 'fa-square' : 'fa-microphone'"></i>
-      </button>
-      <div class="mt-2 fw-semibold" style="font-size:.83rem;"
-           ng-class="isRecording ? 'text-rose' : 'text-muted'">
+    <div class="text-center mb-4">
+      <div class="position-relative d-inline-block">
+        <button type="button" class="mic-btn"
+                ng-class="{'recording': isRecording}"
+                ng-click="toggleVoiceRecording()"
+                style="width:76px; height:76px; font-size:1.75rem;">
+          <i class="fa-solid" ng-class="isRecording ? 'fa-stop' : 'fa-microphone'"></i>
+        </button>
+      </div>
+      <div class="mt-2 fw-bold" style="font-size:.85rem;"
+           ng-class="isRecording ? 'text-rose' : 'text-purple'">
         <span ng-if="isRecording">
-          <span class="dot-pulse me-1"></span> Listening...
+          <span class="dot-pulse me-1"></span> Listening... Tap to stop
         </span>
-        <span ng-if="!isRecording">Tap to start</span>
+        <span ng-if="!isRecording">Tap microphone to start speaking</span>
       </div>
     </div>
 
     <!-- Transcript -->
-    <textarea class="form-control transcript-box mb-3" rows="2"
-              ng-model="voiceTranscript" ng-disabled="isRecording"
-              placeholder="Your speech transcript will appear here..."></textarea>
+    <div class="mb-3" style="max-width:680px; margin:0 auto;">
+      <textarea class="form-control transcript-box" rows="2"
+                ng-model="voiceTranscript" ng-disabled="isRecording"
+                placeholder="Spoken product details will appear here..."></textarea>
+    </div>
 
-    <div class="d-flex justify-content-end gap-2" ng-if="!showVoiceConfirm">
-      <button type="button" class="btn btn-gradient-purple px-4"
+    <div class="d-flex justify-content-center gap-2" ng-if="!showVoiceConfirm">
+      <button type="button" class="btn btn-gradient-purple px-5 py-2 fw-bold"
               ng-click="parseVoiceInventory()" ng-disabled="!voiceTranscript">
         <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Extract Product Details
       </button>
     </div>
 
     <!-- Voice Confirmation -->
-    <div ng-if="showVoiceConfirm && voiceParsed" class="mt-3 pt-3"
-         style="border-top:1px solid var(--border-color);">
-      <div class="fw-bold text-emerald mb-3" style="font-size:.9rem;">
+    <div ng-if="showVoiceConfirm && voiceParsed" class="mt-4 pt-4 border-top">
+      <div class="fw-bold text-emerald mb-3" style="font-size:.95rem;">
         <i class="fa-solid fa-circle-check me-2"></i>Extracted Inventory Details — Please Review
       </div>
-      <div class="card-custom p-3 mb-3">
+      <div class="bento-card p-4 mb-3 bg-white">
         <div class="row g-3">
           <div class="col-md-3">
             <label class="form-label">Product Name</label>
@@ -123,24 +131,24 @@
         </div>
       </div>
       <div class="d-flex justify-content-end gap-2">
-        <button type="button" class="btn btn-lavender px-3"
+        <button type="button" class="btn btn-lavender px-3 py-2 fw-semibold"
                 ng-click="showVoiceConfirm = false; voiceParsed = null;">Cancel</button>
-        <button type="button" class="btn btn-gradient-purple px-4"
+        <button type="button" class="btn btn-gradient-purple px-4 py-2 fw-bold"
                 ng-click="confirmVoiceAdd()" ng-disabled="isSaving">
           <span ng-if="isSaving" class="spinner-border spinner-border-sm me-2"></span>
           <i class="fa-solid fa-check me-1" ng-if="!isSaving"></i>
-          Confirm &amp; Save Item
+          Confirm &amp; Save Product
         </button>
       </div>
     </div>
   </div>
 
   <!-- ══ INVENTORY TABLE ════════════════════════════════════════════════ -->
-  <div class="table-custom-container">
+  <div class="table-custom-container mb-4">
 
     <!-- Loading -->
     <div ng-if="isLoading" class="text-center py-5">
-      <div class="spinner-border" role="status"></div>
+      <div class="spinner-border text-purple" role="status"></div>
       <p class="text-muted mt-2 small">Loading inventory items...</p>
     </div>
 
@@ -162,10 +170,10 @@
             <td class="text-muted fw-semibold" style="font-size:.8rem;">{{ $index + 1 }}</td>
             <td>
               <div class="d-flex align-items-center gap-2">
-                <div style="width:36px; height:36px; border-radius:var(--radius-md); background:var(--light-lavender); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-                  <i class="fa-solid fa-box text-purple" style="font-size:.85rem;"></i>
+                <div style="width:34px; height:34px; border-radius:var(--r-sm); background:var(--lavender); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <i class="fa-solid fa-box text-purple" style="font-size:.82rem;"></i>
                 </div>
-                <span class="fw-bold text-dark">{{ item.product_name }}</span>
+                <span class="fw-bold text-dark" style="font-size:0.92rem;">{{ item.product_name }}</span>
               </div>
             </td>
             <td>
@@ -173,7 +181,7 @@
             </td>
             <td class="fw-semibold text-dark">{{ item.quantity | number:3 }}</td>
             <td>
-              <span class="fw-bold text-emerald" style="font-size:1rem;">₹{{ item.price | number:2 }}</span>
+              <span class="fw-bold text-emerald" style="font-size:.95rem;">₹{{ item.price | number:2 }}</span>
               <span class="text-muted small"> / {{ item.unit }}</span>
             </td>
             <td class="text-end">
@@ -200,15 +208,15 @@
         <div class="empty-state-icon">
           <i class="fa-solid fa-box-open"></i>
         </div>
-        <h5>No Products Found</h5>
-        <p>Add commonly sold products &amp; default prices.<br>They'll auto-apply in voice transactions.</p>
-        <div class="d-flex justify-content-center gap-2 mt-3">
-          <button class="btn btn-gradient-purple px-4"
+        <h5 class="fw-bold text-dark mb-1">No Products Found</h5>
+        <p class="text-muted small mb-4">Add commonly sold products &amp; default prices.<br>They will auto-apply in your voice transactions.</p>
+        <div class="d-flex justify-content-center gap-2">
+          <button class="btn btn-gradient-purple px-4 py-2"
                   data-bs-toggle="modal" data-bs-target="#inventoryFormModal"
                   ng-click="openAddModal()">
             <i class="fa-solid fa-plus me-1"></i> Add Product
           </button>
-          <button class="btn btn-outline-purple px-4" ng-click="openVoiceAdd()">
+          <button class="btn btn-outline-purple px-4 py-2" ng-click="openVoiceAdd()">
             <i class="fa-solid fa-microphone me-1"></i> Add by Voice
           </button>
         </div>
@@ -219,21 +227,21 @@
   <!-- ══ ADD/EDIT INVENTORY MODAL ════════════════════════════════════════ -->
   <div class="modal fade" id="inventoryFormModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
+      <div class="modal-content shadow-lg border-0 rounded-4">
+        <div class="modal-header border-bottom pb-3">
           <h5 class="modal-header-title fw-bold text-dark mb-0">
             <i class="fa-solid fa-box text-purple me-2"></i>
             {{ editMode ? 'Edit Inventory Item' : 'Add Inventory Item' }}
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body p-4">
           <form ng-submit="saveItem()">
             <div class="mb-3">
               <label class="form-label">Product Name *</label>
               <input type="text" class="form-control"
                      ng-model="formItem.product_name" required
-                     placeholder="e.g. Butter, Sugar, Rice, Oil">
+                     placeholder="e.g. Butter, Sugar, Rice, Cooking Oil">
             </div>
             <div class="row g-3 mb-3">
               <div class="col-md-4">
@@ -259,22 +267,22 @@
 
             <!-- Preview -->
             <div class="p-3 rounded-3 mb-4"
-                 style="background:var(--very-light-lavender); border:1px solid var(--border-color);"
+                 style="background:var(--lavender-light); border:1px solid var(--gray-200);"
                  ng-if="formItem.product_name && formItem.price >= 0">
               <div class="d-flex align-items-center gap-2 flex-wrap" style="font-size:.88rem;">
                 <i class="fa-solid fa-eye text-purple"></i>
                 <strong class="text-dark">{{ formItem.product_name }}</strong>
                 <span class="text-muted">→</span>
-                <span class="fw-semibold text-purple-dark">{{ formItem.quantity | number:3 }} {{ formItem.unit }}</span>
+                <span class="fw-semibold text-purple">{{ formItem.quantity | number:3 }} {{ formItem.unit }}</span>
                 <span class="text-muted">at</span>
                 <span class="fw-bold text-emerald">₹{{ formItem.price | number:2 }}</span>
                 <span class="text-muted">/ {{ formItem.unit }}</span>
               </div>
             </div>
 
-            <div class="d-flex justify-content-end gap-2">
-              <button type="button" class="btn btn-lavender px-3" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-gradient-purple px-4" ng-disabled="isSaving">
+            <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+              <button type="button" class="btn btn-lavender px-3 py-2 fw-semibold" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-gradient-purple px-4 py-2 fw-bold" ng-disabled="isSaving">
                 <span ng-if="isSaving" class="spinner-border spinner-border-sm me-2"></span>
                 <i class="fa-solid fa-check me-1" ng-if="!isSaving"></i>
                 {{ editMode ? 'Update Item' : 'Save Item' }}

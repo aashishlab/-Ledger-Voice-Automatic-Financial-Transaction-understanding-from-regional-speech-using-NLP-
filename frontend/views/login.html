@@ -1,32 +1,36 @@
 <!-- =====================================================
-     LOGIN PAGE
+     LOGIN PAGE — Premium Auth (AI Wallet style)
      ===================================================== -->
-<div class="row justify-content-center align-items-center py-4" style="min-height: calc(100vh - 140px);">
-  <div class="col-md-5 col-lg-4 col-xl-3">
+<div style="min-height: calc(100vh - 120px); display:flex; align-items:center; justify-content:center; padding:2rem 1rem;">
+  <div style="width:100%; max-width:420px;">
+
+    <!-- Auth Card -->
     <div class="auth-card p-4 p-md-5 animate-fade-up">
 
-      <!-- Icon -->
+      <!-- Branding -->
       <div class="text-center mb-4">
         <div class="auth-icon-ring">
           <i class="fa-solid fa-right-to-bracket"></i>
         </div>
-        <h3 class="fw-extrabold text-dark mb-1" style="letter-spacing:-.02em;">Welcome back</h3>
-        <p class="text-muted" style="font-size:.88rem;">Sign in to your VoiceKhata account</p>
+        <h3 style="font-family:var(--font-heading); font-weight:800; color:var(--gray-950); margin-bottom:.3rem; font-size:1.5rem; letter-spacing:-.025em;">
+          Welcome back
+        </h3>
+        <p style="font-size:.87rem; color:var(--gray-400);">Sign in to access your VoiceKhata ledger</p>
       </div>
 
       <!-- Error Alert -->
       <div ng-if="errorMessage" class="alert alert-danger d-flex align-items-center gap-2 mb-4" role="alert">
         <i class="fa-solid fa-circle-exclamation flex-shrink-0"></i>
-        <span style="font-size:.875rem;">{{ errorMessage }}</span>
+        <span style="font-size:.85rem;">{{ errorMessage }}</span>
       </div>
 
       <!-- Login Form -->
       <form ng-submit="doLogin()">
         <div class="mb-3">
-          <label class="form-label">Username</label>
+          <label class="form-label" style="color:var(--gray-700); font-size:.82rem;">Username</label>
           <div class="input-group">
             <span class="input-group-text">
-              <i class="fa-solid fa-user text-purple"></i>
+              <i class="fa-solid fa-user" style="color:var(--primary);"></i>
             </span>
             <input type="text" class="form-control" id="login-username"
                    ng-model="loginData.username"
@@ -35,10 +39,10 @@
         </div>
 
         <div class="mb-4">
-          <label class="form-label">Password</label>
+          <label class="form-label" style="color:var(--gray-700); font-size:.82rem;">Password</label>
           <div class="input-group">
             <span class="input-group-text">
-              <i class="fa-solid fa-lock text-purple"></i>
+              <i class="fa-solid fa-lock" style="color:var(--primary);"></i>
             </span>
             <input type="password" class="form-control" id="login-password"
                    ng-model="loginData.password"
@@ -47,33 +51,33 @@
         </div>
 
         <button type="submit" id="login-submit"
-                class="btn btn-gradient-purple w-100 py-3 mb-3"
-                style="font-size:.95rem; letter-spacing:.01em;"
+                class="btn btn-gradient-purple w-100 py-3 mb-3 fw-bold"
+                style="font-size:.9rem;"
                 ng-disabled="isLoading">
           <span ng-if="isLoading">
             <span class="spinner-border spinner-border-sm me-2"></span>Signing in...
           </span>
           <span ng-if="!isLoading">
-            <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Sign In
+            Sign In <i class="fa-solid fa-arrow-right ms-2"></i>
           </span>
         </button>
 
         <div class="divider-with-text my-3">or</div>
 
-        <div class="text-center" style="font-size:.875rem;">
-          <span class="text-muted">Don't have an account?</span>
+        <div class="text-center" style="font-size:.85rem;">
+          <span style="color:var(--gray-400);">Don't have an account?</span>
           <a href="#!/register" class="fw-bold ms-1"
-             style="color: var(--primary-purple);">Create account</a>
+             style="color: var(--primary);">Create account</a>
         </div>
       </form>
     </div>
 
     <!-- Trust indicators -->
-    <div class="d-flex justify-content-center gap-4 mt-3 text-muted animate-fade-in"
-         style="font-size:.78rem; animation-delay:.3s;">
-      <span><i class="fa-solid fa-shield-halved me-1 text-emerald"></i>JWT Secured</span>
-      <span><i class="fa-solid fa-lock me-1 text-purple"></i>Encrypted</span>
-      <span><i class="fa-solid fa-database me-1 text-amber"></i>PostgreSQL</span>
+    <div class="d-flex justify-content-center gap-4 mt-4 animate-fade-in"
+         style="font-size:.75rem; color:var(--gray-400); animation-delay:.3s;">
+      <span><i class="fa-solid fa-shield-halved me-1" style="color:var(--green);"></i>JWT Secured</span>
+      <span><i class="fa-solid fa-lock me-1" style="color:var(--primary);"></i>Encrypted</span>
+      <span><i class="fa-solid fa-database me-1" style="color:var(--blue);"></i>PostgreSQL</span>
     </div>
   </div>
 </div>

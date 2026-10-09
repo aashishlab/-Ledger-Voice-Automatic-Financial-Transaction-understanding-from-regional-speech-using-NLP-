@@ -1,13 +1,18 @@
 <!-- =====================================================
-     INSIGHTS PAGE — Financial Analytics
+     INSIGHTS PAGE — Financial Analytics & AI Reports
      ===================================================== -->
 <div class="animate-fade-up">
 
   <!-- ── HEADER + TIME FILTERS ──────────────────────────────────────── -->
   <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
-    <div class="page-header">
-      <h2><i class="fa-solid fa-chart-line text-purple me-2"></i>Financial Insights &amp; Analytics</h2>
-      <p>Automated financial reports, cash flow, credit recovery &amp; product performance</p>
+    <div class="page-header mb-0">
+      <div class="d-inline-flex align-items-center gap-2 mb-1">
+        <span class="badge-custom badge-sales px-3 py-1">
+          <i class="fa-solid fa-chart-pie"></i> Business Intelligence
+        </span>
+      </div>
+      <h2>Financial Insights &amp; Analytics</h2>
+      <p>Automated business intelligence, cash flow trends, credit recovery &amp; product performance</p>
     </div>
 
     <!-- Filter Controls -->
@@ -22,8 +27,8 @@
       </div>
 
       <!-- Custom Date Range -->
-      <div class="d-flex align-items-center gap-2 card-custom px-3 py-2"
-           style="border-radius:var(--radius-full); box-shadow:none;">
+      <div class="d-flex align-items-center gap-2 bento-card px-3 py-2"
+           style="border-radius:var(--r-full); box-shadow:none;">
         <i class="fa-solid fa-calendar text-purple" style="font-size:.85rem;"></i>
         <input type="date" class="form-control form-control-sm border-0 bg-transparent p-0"
                ng-model="customStartDate" style="max-width:120px; font-size:.82rem;">
@@ -31,17 +36,17 @@
         <input type="date" class="form-control form-control-sm border-0 bg-transparent p-0"
                ng-model="customEndDate" style="max-width:120px; font-size:.82rem;">
         <button class="btn btn-gradient-purple btn-sm"
-                style="width:30px; height:30px; padding:0; border-radius:50%; display:flex; align-items:center; justify-content:center;"
-                ng-click="applyCustomFilter()" title="Apply">
-          <i class="fa-solid fa-filter" style="font-size:.7rem;"></i>
+                style="width:28px; height:28px; padding:0; border-radius:50%; display:flex; align-items:center; justify-content:center;"
+                ng-click="applyCustomFilter()" title="Apply Date Filter">
+          <i class="fa-solid fa-filter" style="font-size:.68rem;"></i>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Loading -->
+  <!-- Loading State -->
   <div ng-if="isLoading" class="text-center py-5">
-    <div class="spinner-border" style="width:2.5rem; height:2.5rem;" role="status"></div>
+    <div class="spinner-border text-purple" style="width:2.5rem; height:2.5rem;" role="status"></div>
     <p class="text-muted mt-3 small">Analyzing financial transactions &amp; ledger data...</p>
   </div>
 
@@ -50,23 +55,23 @@
     <!-- ── 6 KPI CARDS ──────────────────────────────────────────────── -->
     <div class="row g-3 mb-4">
       <div class="col-6 col-md-4 col-xl-2">
-        <div class="kpi-card kpi-green">
+        <div class="kpi-card kpi-green h-100">
           <div class="text-muted" style="font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Total Sales</div>
-          <h4 class="fw-bold text-emerald mb-0 mt-1" style="font-size:1.3rem; letter-spacing:-.02em;">₹{{ analytics.summary.total_sales | number:0 }}</h4>
+          <h4 class="fw-bold text-emerald mb-0 mt-1" style="font-size:1.25rem; letter-spacing:-.02em;">₹{{ analytics.summary.total_sales | number:0 }}</h4>
           <small class="text-muted">{{ analytics.summary.sales_count }} order(s)</small>
         </div>
       </div>
       <div class="col-6 col-md-4 col-xl-2">
-        <div class="kpi-card kpi-rose">
+        <div class="kpi-card kpi-rose h-100">
           <div class="text-muted" style="font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Total Expenses</div>
-          <h4 class="fw-bold text-rose mb-0 mt-1" style="font-size:1.3rem; letter-spacing:-.02em;">₹{{ analytics.summary.total_expense | number:0 }}</h4>
+          <h4 class="fw-bold text-rose mb-0 mt-1" style="font-size:1.25rem; letter-spacing:-.02em;">₹{{ analytics.summary.total_expense | number:0 }}</h4>
           <small class="text-muted">Logged expenses</small>
         </div>
       </div>
       <div class="col-6 col-md-4 col-xl-2">
-        <div class="kpi-card kpi-purple">
+        <div class="kpi-card kpi-purple h-100">
           <div class="text-muted" style="font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Net Cash Flow</div>
-          <h4 class="fw-bold mb-0 mt-1" style="font-size:1.3rem; letter-spacing:-.02em;"
+          <h4 class="fw-bold mb-0 mt-1" style="font-size:1.25rem; letter-spacing:-.02em;"
               ng-class="{'text-emerald': analytics.summary.net_cash_flow >= 0, 'text-rose': analytics.summary.net_cash_flow < 0}">
             ₹{{ analytics.summary.net_cash_flow | number:0 }}
           </h4>
@@ -74,48 +79,53 @@
         </div>
       </div>
       <div class="col-6 col-md-4 col-xl-2">
-        <div class="kpi-card kpi-amber">
+        <div class="kpi-card kpi-amber h-100">
           <div class="text-muted" style="font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Outstanding</div>
-          <h4 class="fw-bold text-amber mb-0 mt-1" style="font-size:1.3rem; letter-spacing:-.02em;">₹{{ analytics.summary.outstanding_credit | number:0 }}</h4>
+          <h4 class="fw-bold text-amber mb-0 mt-1" style="font-size:1.25rem; letter-spacing:-.02em;">₹{{ analytics.summary.outstanding_credit | number:0 }}</h4>
           <small class="text-muted">Pending balance</small>
         </div>
       </div>
       <div class="col-6 col-md-4 col-xl-2">
-        <div class="kpi-card kpi-purple">
+        <div class="kpi-card kpi-purple h-100">
           <div class="text-muted" style="font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Payments Got</div>
-          <h4 class="fw-bold text-purple mb-0 mt-1" style="font-size:1.3rem; letter-spacing:-.02em;">₹{{ analytics.summary.total_payments | number:0 }}</h4>
+          <h4 class="fw-bold text-purple mb-0 mt-1" style="font-size:1.25rem; letter-spacing:-.02em;">₹{{ analytics.summary.total_payments | number:0 }}</h4>
           <small class="text-muted">Recovered cash</small>
         </div>
       </div>
       <div class="col-6 col-md-4 col-xl-2">
-        <div class="kpi-card kpi-blue" style="border-left-color:var(--blue-primary);">
+        <div class="kpi-card kpi-blue h-100">
           <div class="text-muted" style="font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Customers</div>
-          <h4 class="fw-bold mb-0 mt-1" style="font-size:1.3rem; letter-spacing:-.02em; color:var(--blue-primary);">{{ analytics.summary.active_customers }}</h4>
-          <small class="text-muted">Active ledgers</small>
+          <h4 class="fw-bold mb-0 mt-1" style="font-size:1.25rem; letter-spacing:-.02em; color:var(--blue);">{{ analytics.summary.active_customers }}</h4>
+          <small class="text-muted">Active accounts</small>
         </div>
       </div>
     </div>
 
     <!-- ── AI INSIGHTS BANNER ──────────────────────────────────────── -->
-    <div class="card-custom mb-4 p-4"
-         style="background:linear-gradient(135deg, var(--primary-purple-dark) 0%, #3b0764 100%); border-color:transparent;">
+    <div class="bento-card mb-4 p-4 shadow-sm"
+         style="background:linear-gradient(135deg, var(--gray-950) 0%, var(--gray-900) 100%); border-color:transparent; color:#fff;">
       <div class="d-flex align-items-center gap-2 mb-2">
-        <i class="fa-solid fa-lightbulb text-amber fs-5"></i>
-        <h5 class="fw-bold mb-0 text-white">Automated AI Business Insights</h5>
+        <div style="width:32px; height:32px; border-radius:var(--r-sm); background:rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center;">
+          <i class="fa-solid fa-lightbulb text-amber fs-6"></i>
+        </div>
+        <h5 class="fw-bold mb-0 text-white" style="font-size:1.02rem; font-family:var(--font-heading);">Automated AI Business Insights</h5>
       </div>
       <ul class="mb-0 ps-4" style="line-height:1.9;">
-        <li ng-repeat="bullet in analytics.key_insights" class="text-white" style="font-size:.9rem; opacity:.9;">{{ bullet }}</li>
+        <li ng-repeat="bullet in analytics.key_insights" class="text-white" style="font-size:.88rem; opacity:.9;">{{ bullet }}</li>
       </ul>
     </div>
 
     <!-- ── CHARTS ROW 1: Sales Trend + Sales vs Expenses ─────────── -->
-    <div class="row g-4 mb-4">
+    <div class="row g-3 mb-4">
       <div class="col-lg-7">
-        <div class="card-custom p-4 h-100">
+        <div class="bento-card p-4 h-100">
           <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="fw-bold mb-0 text-dark">
-              <i class="fa-solid fa-chart-line text-purple me-2"></i>Sales Revenue Trend
-            </h5>
+            <div>
+              <h5 class="fw-bold mb-0 text-dark" style="font-size:.95rem; font-family:var(--font-heading);">
+                <i class="fa-solid fa-chart-line text-purple me-2"></i>Sales Revenue Trend
+              </h5>
+              <small class="text-muted">Daily breakdown of completed sales orders</small>
+            </div>
             <span class="badge-custom badge-sales">Avg: ₹{{ analytics.summary.avg_sale_value | number:0 }}</span>
           </div>
           <div class="chart-container" style="height:270px;">
@@ -124,10 +134,11 @@
         </div>
       </div>
       <div class="col-lg-5">
-        <div class="card-custom p-4 h-100">
-          <h5 class="fw-bold mb-3 text-dark">
+        <div class="bento-card p-4 h-100">
+          <h5 class="fw-bold mb-1 text-dark" style="font-size:.95rem; font-family:var(--font-heading);">
             <i class="fa-solid fa-scale-balanced text-purple me-2"></i>Sales vs Expenses
           </h5>
+          <small class="text-muted d-block mb-3">Comparing revenue against operating costs</small>
           <div class="chart-container" style="height:270px;">
             <canvas id="salesVsExpenseChart"></canvas>
           </div>
@@ -136,25 +147,27 @@
     </div>
 
     <!-- ── CHARTS ROW 2: Cash Flow + Weekly Activity ─────────────── -->
-    <div class="row g-4 mb-4">
+    <div class="row g-3 mb-4">
       <div class="col-lg-7">
-        <div class="card-custom p-4 h-100">
-          <h5 class="fw-bold mb-3 text-dark">
+        <div class="bento-card p-4 h-100">
+          <h5 class="fw-bold mb-1 text-dark" style="font-size:.95rem; font-family:var(--font-heading);">
             <i class="fa-solid fa-money-bill-transfer text-purple me-2"></i>Cash Flow Progression
           </h5>
+          <small class="text-muted d-block mb-3">Cumulative net cash generated over the selected timeframe</small>
           <div class="chart-container" style="height:270px;">
             <canvas id="cashFlowChart"></canvas>
           </div>
         </div>
       </div>
       <div class="col-lg-5">
-        <div class="card-custom p-4 h-100">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="fw-bold mb-0 text-dark">
+        <div class="bento-card p-4 h-100">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <h5 class="fw-bold mb-0 text-dark" style="font-size:.95rem; font-family:var(--font-heading);">
               <i class="fa-solid fa-calendar-week text-amber me-2"></i>Weekly Activity
             </h5>
             <span class="badge-custom badge-expense">Best: {{ analytics.weekly_activity.best_sales_day }}</span>
           </div>
+          <small class="text-muted d-block mb-3">Volume distribution across days of the week</small>
           <div class="chart-container" style="height:270px;">
             <canvas id="weeklyActivityChart"></canvas>
           </div>
@@ -163,34 +176,36 @@
     </div>
 
     <!-- ── CHARTS ROW 3: Recovery Rate + Outstanding Customers ───── -->
-    <div class="row g-4 mb-4">
+    <div class="row g-3 mb-4">
       <div class="col-lg-4">
-        <div class="card-custom p-4 h-100">
-          <h5 class="fw-bold mb-3 text-dark">
+        <div class="bento-card p-4 h-100">
+          <h5 class="fw-bold mb-1 text-dark" style="font-size:.95rem; font-family:var(--font-heading);">
             <i class="fa-solid fa-rotate-left text-emerald me-2"></i>Credit Recovery Rate
           </h5>
+          <small class="text-muted d-block mb-2">Percentage of credit collected back</small>
           <div class="chart-container my-2" style="height:190px;">
             <canvas id="creditRecoveryChart"></canvas>
           </div>
           <div class="text-center mt-2">
-            <div class="fw-extrabold text-emerald" style="font-size:2.2rem; letter-spacing:-.03em;">
+            <div class="fw-extrabold text-emerald" style="font-size:2rem; letter-spacing:-.03em;">
               {{ analytics.summary.recovery_rate }}%
             </div>
             <small class="text-muted">
               Recovered ₹{{ analytics.summary.recovered_credit | number:0 }} of
-              ₹{{ analytics.summary.total_credit | number:0 }} credit
+              ₹{{ analytics.summary.total_credit | number:0 }} total credit
             </small>
           </div>
         </div>
       </div>
       <div class="col-lg-8">
-        <div class="card-custom p-4 h-100">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="fw-bold mb-0 text-dark">
+        <div class="bento-card p-4 h-100">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <h5 class="fw-bold mb-0 text-dark" style="font-size:.95rem; font-family:var(--font-heading);">
               <i class="fa-solid fa-user-clock text-amber me-2"></i>Outstanding Customers
             </h5>
             <span class="badge-custom badge-expense">{{ analytics.outstanding_customers.length }} customer(s)</span>
           </div>
+          <small class="text-muted d-block mb-3">Accounts with pending balances due for collection</small>
           <div class="table-custom-container border-0 shadow-none" style="max-height:250px; overflow-y:auto;">
             <table class="table table-custom align-middle mb-0">
               <thead>
@@ -211,7 +226,7 @@
                        href="https://wa.me/{{ cleanPhone(cust.phone) }}?text=Hi%20{{ cust.name }},%20friendly%20reminder%20about%20your%20outstanding%20balance%20of%20Rs.%20{{ cust.outstanding }}."
                        target="_blank"
                        class="btn btn-sm d-inline-flex align-items-center gap-1 px-3"
-                       style="background:#25D366; color:#fff; border-radius:var(--radius-full); font-size:.78rem; font-weight:700; border:none; padding:.35rem .75rem;">
+                       style="background:#25D366; color:#fff; border-radius:var(--r-full); font-size:.75rem; font-weight:700; border:none; padding:.32rem .7rem;">
                       <i class="fa-brands fa-whatsapp"></i> Remind
                     </a>
                   </td>
@@ -230,11 +245,11 @@
     </div>
 
     <!-- ── TOP PRODUCTS (conditional) ─────────────────────────────── -->
-    <div class="row g-4 mb-4"
+    <div class="row g-3 mb-4"
          ng-if="analytics.top_products_revenue && analytics.top_products_revenue.length > 0">
       <div class="col-lg-6">
-        <div class="card-custom p-4 h-100">
-          <h5 class="fw-bold mb-3 text-dark">
+        <div class="bento-card p-4 h-100">
+          <h5 class="fw-bold mb-3 text-dark" style="font-size:.95rem; font-family:var(--font-heading);">
             <i class="fa-solid fa-boxes-stacked text-purple me-2"></i>Top Products by Revenue
           </h5>
           <div class="chart-container" style="height:250px;">
@@ -243,8 +258,8 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <div class="card-custom p-4 h-100">
-          <h5 class="fw-bold mb-3 text-dark">
+        <div class="bento-card p-4 h-100">
+          <h5 class="fw-bold mb-3 text-dark" style="font-size:.95rem; font-family:var(--font-heading);">
             <i class="fa-solid fa-list-ol text-purple me-2"></i>Product Performance Ranking
           </h5>
           <div class="table-custom-container border-0 shadow-none" style="max-height:250px; overflow-y:auto;">
@@ -259,7 +274,7 @@
               </thead>
               <tbody>
                 <tr ng-repeat="prod in analytics.top_products_revenue">
-                  <td class="text-muted fw-bold" style="font-size:.85rem;">{{ $index + 1 }}</td>
+                  <td class="text-muted fw-bold" style="font-size:.82rem;">{{ $index + 1 }}</td>
                   <td class="fw-bold text-dark">{{ prod.name }}</td>
                   <td class="text-muted">{{ prod.qty | number:2 }} {{ prod.unit }}</td>
                   <td class="fw-bold text-emerald">₹{{ prod.revenue | number:0 }}</td>
@@ -272,10 +287,10 @@
     </div>
 
     <!-- ── EXPENSE BREAKDOWN + TRANSACTION MIX ──────────────────── -->
-    <div class="row g-4 mb-4">
+    <div class="row g-3 mb-4">
       <div class="col-lg-6">
-        <div class="card-custom p-4 h-100">
-          <h5 class="fw-bold mb-3 text-dark">
+        <div class="bento-card p-4 h-100">
+          <h5 class="fw-bold mb-3 text-dark" style="font-size:.95rem; font-family:var(--font-heading);">
             <i class="fa-solid fa-tags text-rose me-2"></i>Expenses by Category
           </h5>
           <div class="chart-container" style="height:230px;"
@@ -284,16 +299,16 @@
           </div>
           <div class="empty-state py-4"
                ng-if="!analytics.expense_categories || analytics.expense_categories.length === 0">
-            <div class="empty-state-icon" style="background:var(--rose-bg); color:var(--rose-primary);">
+            <div class="empty-state-icon" style="background:var(--red-bg); color:var(--red);">
               <i class="fa-solid fa-tags"></i>
             </div>
-            <p class="mt-2">No expenses logged for this period.</p>
+            <p class="mt-2 text-muted small">No expenses logged for this period.</p>
           </div>
         </div>
       </div>
       <div class="col-lg-6">
-        <div class="card-custom p-4 h-100">
-          <h5 class="fw-bold mb-3 text-dark">
+        <div class="bento-card p-4 h-100">
+          <h5 class="fw-bold mb-3 text-dark" style="font-size:.95rem; font-family:var(--font-heading);">
             <i class="fa-solid fa-chart-pie text-purple me-2"></i>Transaction Type Mix
           </h5>
           <div class="chart-container" style="height:230px;">

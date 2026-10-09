@@ -1,121 +1,138 @@
 <!-- =====================================================
-     VOICE ENTRY STUDIO — Voice Input Page
+     VOICE ENTRY STUDIO — AI Voice Assistant
+     Inspired by AI Voice Wallet Reference
      ===================================================== -->
 <div class="row justify-content-center py-2 animate-fade-up">
   <div class="col-lg-10 col-xl-9">
 
     <!-- Page Header -->
-    <div class="page-header mb-4 text-center">
+    <div class="text-center mb-4">
       <div class="d-inline-flex align-items-center gap-2 mb-2">
-        <span class="badge-custom badge-sales">
-          <i class="fa-solid fa-sparkles"></i> Voice-First AI Studio
+        <span class="badge-custom badge-sales px-3 py-1">
+          <i class="fa-solid fa-sparkles"></i> AI Speech-to-Ledger Studio
         </span>
       </div>
-      <h2 style="font-size:1.65rem;">Voice Entry &amp; Recording</h2>
-      <p class="text-muted" style="max-width:620px; margin: .35rem auto 0; font-size:.9rem; line-height:1.7;">
-        Speak financial transactions in natural English.
-        Try: <strong class="text-dark">"Given ₹500 credit to Ramesh"</strong> or
-        <strong class="text-dark">"Sold Sugar 2kg 100, Rice 5kg 250"</strong>
+      <h2 style="font-family:var(--font-heading); font-size:2rem; font-weight:800; letter-spacing:-0.035em; color:var(--gray-950); margin-bottom:.4rem;">
+        Speak &amp; Record Transactions
+      </h2>
+      <p style="color:var(--gray-400); max-width:620px; margin: 0 auto; font-size:.9rem; line-height:1.6;">
+        Speak naturally in English or mix of business terms. Dual AI extracts customer, items, prices &amp; totals instantaneously.
       </p>
     </div>
 
     <!-- ══ VOICE STUDIO CARD ══════════════════════════════════════════ -->
-    <div class="card-custom p-4 p-md-5 mb-4">
-      <div class="voice-hero-card">
-        <div class="mic-container">
+    <div class="bento-card p-4 p-md-5 mb-4 position-relative overflow-hidden"
+         style="background: radial-gradient(ellipse at 50% 30%, rgba(243,232,255,0.7) 0%, #FFFFFF 85%); border-color:var(--gray-200); box-shadow: var(--shadow-sm);">
 
-          <!-- Mic Button -->
-          <div class="mic-btn-wrapper">
-            <button type="button" class="mic-btn"
-                    id="voice-mic-btn"
-                    ng-class="{'recording': isRecording}"
-                    ng-click="toggleRecording()"
-                    title="Click to start/stop voice recording">
-              <i class="fa-solid" ng-class="isRecording ? 'fa-square' : 'fa-microphone'"></i>
-            </button>
-            <div class="mic-pulse-ring"></div>
-            <div class="mic-pulse-ring ring2"></div>
-          </div>
+      <div class="mic-container">
 
-          <!-- Status Badge -->
-          <div class="mb-4">
-            <div class="recording-indicator active" ng-if="isRecording">
-              <span class="dot-pulse"></span>
-              LISTENING — Tap microphone to stop
-            </div>
-            <div class="recording-indicator idle" ng-if="!isRecording">
-              <i class="fa-solid fa-circle-dot text-purple"></i>
-              Tap microphone to start speaking
-            </div>
-          </div>
-
-          <!-- Transcript Box -->
-          <div class="w-100 mb-4" style="max-width:700px;">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <label class="form-label mb-0">
-                <i class="fa-solid fa-file-lines text-purple me-1"></i>
-                Transcribed Voice Text
-              </label>
-              <small class="text-muted" ng-if="transcript" style="font-size:.75rem;">
-                <i class="fa-solid fa-pencil me-1"></i>Editable
-              </small>
-            </div>
-            <textarea class="form-control transcript-box" rows="3"
-                      id="voice-transcript"
-                      ng-model="transcript"
-                      ng-disabled="isRecording"
-                      placeholder="Your transcribed speech will appear here automatically... (or type manually)">
-            </textarea>
-          </div>
-
-          <!-- Action Buttons -->
-          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 w-100" style="max-width:700px;">
-            <button type="button" class="btn btn-lavender px-4"
-                    id="voice-clear-btn"
-                    ng-click="clearText()"
-                    ng-disabled="!transcript">
-              <i class="fa-solid fa-trash me-2"></i>Clear Text
-            </button>
-            <button type="button"
-                    class="btn btn-gradient-purple px-5 py-3"
-                    id="voice-parse-btn"
-                    style="font-size:.95rem;"
-                    ng-click="processSpeech()"
-                    ng-disabled="!transcript || isParsing">
-              <span ng-if="isParsing" class="spinner-border spinner-border-sm me-2"></span>
-              <i class="fa-solid fa-wand-magic-sparkles me-2" ng-if="!isParsing"></i>
-              {{ isParsing ? 'AI Processing...' : 'AI Parse &amp; Save' }}
-            </button>
-          </div>
-
+        <!-- Mic Button with Glowing Pulse Rings & 3D vibe -->
+        <div class="mic-btn-wrapper my-2">
+          <button type="button" class="mic-btn"
+                  id="voice-mic-btn"
+                  ng-class="{'recording': isRecording}"
+                  ng-click="toggleRecording()"
+                  title="Click to start/stop voice recording">
+            <i class="fa-solid" ng-class="isRecording ? 'fa-stop' : 'fa-microphone'"></i>
+          </button>
+          <div class="mic-pulse-ring"></div>
+          <div class="mic-pulse-ring ring2"></div>
         </div>
+
+        <!-- Status Indicator -->
+        <div class="mb-4">
+          <div class="recording-indicator active" ng-if="isRecording">
+            <span class="dot-pulse"></span>
+            LISTENING — Speak now (Tap mic to finish)
+          </div>
+          <div class="recording-indicator idle" ng-if="!isRecording">
+            <i class="fa-solid fa-circle-dot text-purple"></i>
+            Tap microphone or type transcript below
+          </div>
+        </div>
+
+        <!-- Prompt Suggestions / Voice Chips -->
+        <div class="d-flex flex-wrap justify-content-center gap-2 mb-4" style="max-width:650px;">
+          <span class="filter-pill" style="font-size:.78rem; cursor:pointer;"
+                ng-click="transcript = 'Given 500 rupees credit to Ramesh for dairy purchase'">
+            <i class="fa-solid fa-bolt text-amber"></i> "Given ₹500 credit to Ramesh"
+          </span>
+          <span class="filter-pill" style="font-size:.78rem; cursor:pointer;"
+                ng-click="transcript = 'Received 1200 rupees payment from Suresh on cash'">
+            <i class="fa-solid fa-bolt text-emerald"></i> "Received ₹1,200 payment from Suresh"
+          </span>
+          <span class="filter-pill" style="font-size:.78rem; cursor:pointer;"
+                ng-click="transcript = 'Sold 2kg Sugar for 100 and 5kg Rice for 250 to Anita'">
+            <i class="fa-solid fa-bolt text-purple"></i> "Sold Sugar 2kg ₹100, Rice 5kg ₹250"
+          </span>
+        </div>
+
+        <!-- Transcript Box -->
+        <div class="w-100 mb-4" style="max-width:680px;">
+          <div class="d-flex justify-content-between align-items-center mb-2 px-1">
+            <label class="form-label mb-0 fw-bold" style="font-size:0.84rem; color:var(--gray-700);">
+              <i class="fa-solid fa-file-waveform text-purple me-1"></i>
+              Live Speech Transcript
+            </label>
+            <small class="text-muted" ng-if="transcript" style="font-size:.75rem;">
+              <i class="fa-solid fa-pencil me-1"></i>Editable text
+            </small>
+          </div>
+          <textarea class="form-control transcript-box" rows="3"
+                    id="voice-transcript"
+                    ng-model="transcript"
+                    ng-disabled="isRecording"
+                    placeholder="Your spoken words will appear here instantly... (You can also type or edit directly)">
+          </textarea>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 w-100" style="max-width:680px;">
+          <button type="button" class="btn btn-lavender px-4 py-2 fw-semibold"
+                  id="voice-clear-btn"
+                  ng-click="clearText()"
+                  ng-disabled="!transcript">
+            <i class="fa-solid fa-trash-can me-2"></i>Clear
+          </button>
+          <button type="button"
+                  class="btn btn-gradient-purple px-5 py-3 fw-bold"
+                  id="voice-parse-btn"
+                  style="font-size:.92rem;"
+                  ng-click="processSpeech()"
+                  ng-disabled="!transcript || isParsing">
+            <span ng-if="isParsing" class="spinner-border spinner-border-sm me-2"></span>
+            <i class="fa-solid fa-wand-magic-sparkles me-2" ng-if="!isParsing"></i>
+            {{ isParsing ? 'AI Parsing speech...' : 'AI Extract &amp; Save' }}
+          </button>
+        </div>
+
       </div>
     </div>
 
     <!-- ══ SALES MODE CONFIRMATION ════════════════════════════════════ -->
-    <div ng-if="showConfirmation && isSalesMode" class="card-custom p-4 p-md-5 mb-4 animate-fade-up"
-         style="border-color:var(--emerald-primary);">
+    <div ng-if="showConfirmation && isSalesMode" class="bento-card p-4 p-md-5 mb-4 animate-fade-up"
+         style="border-color:var(--green); box-shadow: var(--shadow-md);">
 
       <!-- Header -->
-      <div class="d-flex align-items-center justify-content-between mb-3">
+      <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
         <div>
-          <h4 class="fw-bold mb-1 text-emerald">
+          <h4 class="fw-bold mb-1 text-emerald" style="font-family:var(--font-heading); font-size:1.25rem;">
             <i class="fa-solid fa-cart-shopping me-2"></i>Sales Order Extracted
           </h4>
-          <p class="text-muted mb-0" style="font-size:.85rem;">Review quantities, prices and items before saving to ledger</p>
+          <p class="text-muted mb-0" style="font-size:.84rem;">Review items, quantities &amp; unit prices before posting to ledger</p>
         </div>
-        <span class="badge-custom badge-payment">
+        <span class="badge-custom badge-payment px-3 py-1">
           <i class="fa-solid fa-box-open me-1"></i>Multi-Item Sale
         </span>
       </div>
 
       <!-- Missing Price Alert -->
-      <div ng-if="hasMissingPrices()" class="alert alert-warning d-flex align-items-start gap-3 mb-4">
+      <div ng-if="hasMissingPrices()" class="alert alert-warning d-flex align-items-start gap-3 mb-4 rounded-3">
         <i class="fa-solid fa-triangle-exclamation text-amber fs-5 mt-1 flex-shrink-0"></i>
-        <div>
-          <strong class="text-amber">Price Required:</strong>
-          Some products were not found in inventory and had no price in the recording.
-          Please enter their unit prices below to continue.
+        <div style="font-size:0.86rem;">
+          <strong class="text-amber">Unit Price Required:</strong>
+          Some products were not found in your inventory catalog and had no price spoken.
+          Please fill in their unit prices below to continue.
         </div>
       </div>
 
@@ -174,7 +191,7 @@
                   </span>
                   <span ng-if="item.price_source === 'inventory'" class="badge-custom badge-sales"
                         title="From Inventory at ₹{{item.inventory_price}}">
-                    <i class="fa-solid fa-boxes-stacked"></i> Inventory
+                    <i class="fa-solid fa-boxes-stacked"></i> Catalog
                   </span>
                   <span ng-if="item.price_source === 'missing' && (!item.price || item.price <= 0)"
                         class="badge-custom badge-credit animate-pulse">
@@ -201,7 +218,7 @@
             <tfoot>
               <tr>
                 <td colspan="4" class="text-end fw-bold text-dark">Grand Total</td>
-                <td class="fw-bold text-emerald" style="font-size:1.1rem;">
+                <td class="fw-bold text-emerald" style="font-size:1.15rem;">
                   ₹{{ calculateSalesTotal() | number:2 }}
                 </td>
                 <td></td><td></td>
@@ -224,7 +241,7 @@
         <div class="col-md-6">
           <label class="form-label">Customer Name <span class="text-muted fw-normal">(optional)</span></label>
           <input type="text" class="form-control" ng-model="parsedData.customer_name"
-                 placeholder="Leave blank for anonymous sale">
+                 placeholder="Leave blank for walk-in cash customer">
         </div>
         <div class="col-md-6">
           <label class="form-label">Sale Date</label>
@@ -234,16 +251,16 @@
       <div class="mb-4">
         <label class="form-label">Notes <span class="text-muted fw-normal">(optional)</span></label>
         <textarea class="form-control" rows="2" ng-model="parsedData.description"
-                  placeholder="Optional notes about this sale"></textarea>
+                  placeholder="Optional notes about this transaction"></textarea>
       </div>
 
       <!-- Action Buttons -->
-      <div class="d-flex justify-content-between align-items-center gap-2">
-        <button type="button" class="btn btn-lavender px-4"
+      <div class="d-flex justify-content-between align-items-center gap-2 pt-3 border-top">
+        <button type="button" class="btn btn-lavender px-4 py-2 fw-semibold"
                 ng-click="showConfirmation = false; isSalesMode = false; salesItems = []">
           <i class="fa-solid fa-xmark me-1"></i> Cancel
         </button>
-        <button type="button" class="btn btn-gradient-purple px-5 py-3"
+        <button type="button" class="btn btn-gradient-purple px-5 py-3 fw-bold"
                 id="save-sales-btn"
                 style="font-size:.95rem;"
                 ng-click="saveTransaction()"
@@ -256,17 +273,17 @@
     </div>
 
     <!-- ══ STANDARD MODE CONFIRMATION ════════════════════════════════ -->
-    <div ng-if="showConfirmation && !isSalesMode" class="card-custom p-4 p-md-5 mb-4 animate-fade-up"
-         style="border-color:var(--soft-purple);">
+    <div ng-if="showConfirmation && !isSalesMode" class="bento-card p-4 p-md-5 mb-4 animate-fade-up"
+         style="border-color:var(--primary-soft); box-shadow: var(--shadow-md);">
 
-      <div class="d-flex align-items-center justify-content-between mb-3">
+      <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
         <div>
-          <h4 class="fw-bold mb-1 text-purple">
-            <i class="fa-solid fa-wand-magic-sparkles me-2"></i>AI Extracted — Please Review
+          <h4 class="fw-bold mb-1 text-purple" style="font-family:var(--font-heading); font-size:1.25rem;">
+            <i class="fa-solid fa-wand-magic-sparkles me-2"></i>AI Extracted Details
           </h4>
-          <p class="text-muted mb-0" style="font-size:.85rem;">Modify any field if necessary before saving</p>
+          <p class="text-muted mb-0" style="font-size:.84rem;">Review the fields parsed from your voice entry before saving</p>
         </div>
-        <span class="badge-custom badge-sales">Review &amp; Confirm</span>
+        <span class="badge-custom badge-sales px-3 py-1">Review &amp; Confirm</span>
       </div>
 
       <form ng-submit="saveTransaction()">
@@ -307,12 +324,12 @@
                     placeholder="Voice transcript or additional notes"></textarea>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center gap-3">
-          <button type="button" class="btn btn-lavender px-4"
+        <div class="d-flex justify-content-between align-items-center gap-3 pt-3 border-top">
+          <button type="button" class="btn btn-lavender px-4 py-2 fw-semibold"
                   ng-click="showConfirmation = false">
             <i class="fa-solid fa-xmark me-1"></i> Cancel
           </button>
-          <button type="submit" class="btn btn-gradient-purple px-5 py-3"
+          <button type="submit" class="btn btn-gradient-purple px-5 py-3 fw-bold"
                   id="save-transaction-btn"
                   style="font-size:.95rem;"
                   ng-disabled="isSaving">
